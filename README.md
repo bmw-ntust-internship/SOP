@@ -180,7 +180,7 @@ This document establishes the operational standards for interns participating in
 >    a. Add a link to the **commit tree** showing the work.  
 >    b. Add a link to the **header anchor** of the relevant task in the study note.
 >
-> **GitHub Reference Example**: https://github.com/bmw-ece-ntust/SOP/blob/25a0c1dd623a4ceb0d5855b20167e0d4963bf108/paper-writing.md#tips-for-paper-writing
+> [GitHub Reference Example](./paper-writing.md)
 
 ### 3.3 Weekly Reporting
 
