@@ -3,13 +3,19 @@
 ---
 
 > [!WARNING]
-> The [SOP template of project documentation](https://github.com/bmw-ece-ntust/SOP/blob/master/project-documentation.md) is regularly updated.  
+>
+> 1. Use this template as the `README.md` of your main research repository.
+> 
+> 2. The [SOP template of project documentation](https://github.com/bmw-ece-ntust/SOP/blob/master/project-documentation.md) is regularly updated.  
 > Please check it regularly.
 
 > [!CAUTION]
 > **Confidentiality Notice:**
-> Keep this document **private** by default. Publish only after paper acceptance.
-> Request repository access from the GitHub admin.
+> Keep this document `private` by default. 
+>
+> Publish only allowed after the paper of this project is accepted.  
+>
+> **Note**: Request repository access from the GitHub admin.)
 
 ---
 
@@ -19,6 +25,10 @@
 > - **Installation Guide**: System setup, configuration, and deployment procedures
 > - **User Guide**: Operating instructions for the deployed system
 > - **Project Documentation**: Technical architecture, use cases, MSC, flowcharts, and class diagrams with links to installation guides
+
+## Purpose
+
+This documentation purposes to describe the main idea of your thesis/paper writing project. Every detail of your project needs to be written in here, thus the co-authors can verify the research results through this document and repositories.
 
 **Documentation Hierarchy:**
 
@@ -52,10 +62,13 @@ graph TD
 > **Auto-Generate Table of Contents:**
 > Use [Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one#table-of-contents) extension in VS Code for automatic TOC generation.
 
+- [Purpose](#purpose)
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Execution Status](#execution-status)
 - [Minimum Requirements](#minimum-requirements)
+- [System Model](#system-model)
+  - [Energy Saving (ES) Use Case: Inputs → Decision → Outputs](#energy-saving-es-use-case-inputs--decision--outputs)
 - [System Architecture](#system-architecture)
   - [Software Requirements and Versions](#software-requirements-and-versions)
   - [Components Explanation](#components-explanation)
@@ -174,17 +187,87 @@ This document presents an O-RAN-based energy saving system for 5G Radio Access N
 | Storage         | 20 GB available disk space   |
 | Network         | 100 Mbps Ethernet connection |
 
+## System Model
+
+> [!NOTE]
+> **Guideline:** Define the inputs and outputs of the system, including data formats, protocols, and interfaces used for communication between components.
+>
+> Describe how data flows through the system from input to output.
+
+### Energy Saving (ES) Use Case: Inputs → Decision → Outputs
+
+```mermaid
+flowchart LR
+    %% ==================================================
+    %% Simple system model for Energy Saving (ES) use case
+    %% Focus: inputs/outputs and end-to-end data flow
+    %% ==================================================
+
+    subgraph RAN["RAN (gNB)"]
+        direction TB
+        CU["CU (OAI)"]
+        DU["DU (OAI)"]
+        RU["RU"]
+        UE["UE"]
+        CU --- DU --- RU --- UE
+    end
+
+    subgraph SMO["SMO (OSC L)"]
+        direction TB
+        VES["VES Collector\n(O1 event ingestion)"]
+        BUS["Kafka / Metrics Store\n(event bus + time-series)"]
+        ESrApp["ES rApp (Non-RT RIC)\n(policy / analytics)"]
+    end
+
+    subgraph NearRT["Near-RT RIC (OSC L)"]
+        direction TB
+        E2Term["E2 Termination"]
+        ESxApp["ES xApp\n(real-time controller)"]
+    end
+
+    %% Inputs extracted from gNB to SMO (O1)
+    DU -->|"O1: VES events\ncellStatusChange, timestamp"| VES
+    CU -->|"O1: VES events\ncellStatusChange, timestamp"| VES
+    VES -->|"Normalized events"| BUS
+    BUS -->|"Historical time-series\n(DRB.PrbUtilDL, DRB.PrbUtilUL,\nDRB.UEThpDL, DRB.UEThpUL,\nRRC.ConnectedUE)"| ESrApp
+
+    %% Policy output from Non-RT RIC to Near-RT RIC (A1)
+    ESrApp -->|"A1 policy inputs\nprbThresholdLow, prbThresholdHigh,\ndurationThresholdSec"| ESxApp
+
+    %% Near-real-time monitoring input (E2 KPM)
+    DU -->|"E2 KPM inputs\nDRB.PrbUtilDL, DRB.PrbUtilUL,\nDRB.UEThpDL, DRB.UEThpUL,\nRRC.ConnectedUE"| E2Term
+    E2Term -->|"KPM report"| ESxApp
+
+    %% Decision + actuation outputs (E2 RC)
+    ESxApp -->|"E2 RC outputs\nhandoverCmd, targetCellId,\ncellActivationCmd"| E2Term
+    E2Term -->|"E2 control"| DU
+    E2Term -->|"E2 control"| CU
+
+    %% Observable outputs back to SMO (O1)
+    ESxApp -->|"O1 VES events\ncellStatusChange, energySavingEstimate,\ntimestamp"| VES
+```
+
+
+
 ## System Architecture
 
 > [!NOTE]
+>
+> 1. Use Mermaid diagrams in this note for **AI readability purposes**.
+>
+> 2. For publication, put the image components **in the slide directly**. Copy-paste the image for other usages when needed.
+
+> [!WARNING]
+>
 > **Draw.io Files Management:**
 >
 > If you create system architecture diagrams using draw.io:
 >
-> - Store the raw `.drawio` files in the `./docs/drawio` folder of the GitHub repository
-> - Export diagrams as PNG/SVG and embed them in the documentation
-> - Keep `draw.io` files versioned for easy updates and maintenance
-> - Use consistent naming: `<project-name>.drawio`
+> 1. Attach the link of the `.drawio` file in this note & any relevant documentation.
+> 2. Store the raw `.drawio` files in the `./docs/drawio` folder of the GitHub repository
+> 3. Export diagrams as PNG/SVG and embed them in the documentation
+> 4. Keep `draw.io` files versioned for easy updates and maintenance
+> 5. Use consistent naming: `<project-name>.drawio`
 
 ---
 > [!NOTE]
