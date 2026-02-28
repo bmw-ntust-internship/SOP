@@ -22,8 +22,8 @@
     - [5.2 Commitment Expectations](#52-commitment-expectations)
   - [6. Completion and Final Deliverables](#6-completion-and-final-deliverables)
     - [6.1 Required Submissions](#61-required-submissions)
-      - [6.1.1 Research Lab Internship](#611-research-lab-internship)
-      - [6.1.2 Industrial Internship](#612-industrial-internship)
+      - [6.1.1 General Checklist](#611-general-checklist)
+      - [6.1.2 Final Handover Checklist](#612-final-handover-checklist)
     - [6.2 Final Assessments](#62-final-assessments)
 
 ---
@@ -189,14 +189,16 @@ This document establishes the operational standards for interns participating in
 
 - Interns must summarize weekly progress by:
   - Updating Trello (activity and status log).
+  - **Reviewing the Final Handover Checklist to ensure continuous progress on end-of-internship deliverables.**
   - Posting a weekly report in the designated LINE group **every Friday by 15:00 (Taiwan Time)** in the following format:
 
-```markdown
+```text
 This week's work:  
 Problems faced:  
 Milestones achieved:  
 Plan for next week:  
 GitHub link (installation/user guide):
+Final Handover Progress: (e.g., Drafted intro for IEEE report, recorded 1 min of demo)
 ```
 
 ---
@@ -261,21 +263,25 @@ to any external parties outside the lab without explicit authorization from thei
 > Before final submission, use the provided checklist to ensure all deliverables are complete and all documentation links are accessible.
 
 > [!NOTE]
-> Files format naming: `<year>-<internship_program>-<your_name>-<file_name>`
+> Files format naming: <year>-<internship_program>-<your_name>-<file_name>
 
-Upon completion of the internship, each intern must submit:
-
-#### 6.1.1 Research Lab Internship
+#### 6.1.1 General Checklist
+*Ensure these ongoing tasks are maintained throughout your internship.*
 
 - [ ] GitHub repository including:
   - [ ] Source code + documentation (You may use [Doxygen](https://doxygen.nl/#google_vignette) or [Sphinx](https://www.sphinx-doc.org/en/master/))
   - [ ] Installation/user guides (Example: [NVIDIA CUDA installation guide](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/))
   - [ ] System Architecture diagram, MSC + call flow, Flowchart, etc.
-  - [ ] [Project Demo video](https://u.pcloud.link/publink/show?code=kZcjSh5ZycYwg6EvFOh21AV5jdbJNRMAX097) (+ subtitle in English using .srt)
 - [ ] Trello card/GitHub with all checklists:
   - Daily logs (Use Daffa's GitHub/Trello sync project):
     - [ ] Trello comments
-    - [ ] GitHub in `./daily-log.md` on your branch
+    - [ ] GitHub in ./daily-log.md on your branch
+
+#### 6.1.2 Final Handover Checklist
+> [!WARNING]
+> Do not wait until the end of the internship to start these. You are required to review progress on these items weekly.
+
+**For Research Lab Internships:**
 - [ ] Final report:
   - [ ] Project report in [IEEE-formatted](https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn) ([Lab template](https://www.overleaf.com/read/zmrnyqzkkycw))
   - [ ] Testimonial in [Google Docs](https://docs.google.com/document/d/1TJ_ZH05s5CgREhXkVdLC0e45Pccle2hzcsBdOBCwlYY/edit?usp=sharing).
@@ -292,9 +298,9 @@ Upon completion of the internship, each intern must submit:
 - [ ] [Final Videos](https://u.pcloud.link/publink/show?code=kZcjSh5ZycYwg6EvFOh21AV5jdbJNRMAX097):
   - [ ] [Project demo](https://u.pcloud.link/publink/show?code=kZcjSh5ZycYwg6EvFOh21AV5jdbJNRMAX097#/filemanager?folder=26329180467) video in English (~5 minutes/person).
   - [ ] Promotional & [Testimonial video](https://u.pcloud.link/publink/show?code=kZcjSh5ZycYwg6EvFOh21AV5jdbJNRMAX097#/filemanager?folder=26329102696) (2-3 minutes/person)
+  - [ ] Project Demo video (+ subtitle in English using .srt)
 
-#### 6.1.2 Industrial Internship
-
+**For Industrial Internships:**
 > [!NOTE]
 > Due to company's confidential policies, the following deliverables need to be confirmed with the host company before submission. Please use email and cc your supervisor in NTUST.
 
@@ -302,9 +308,10 @@ Upon completion of the internship, each intern must submit:
   - [ ] Testimonial in [Google Docs](https://drive.google.com/drive/folders/1LUXsHmH-f80VqcJI55XWuzvm6z3VvgyA?usp=sharing)
   - [ ] Internship report to university (upload to [pCloud](http://u.pc.cd/irg7))
   - [ ] 5-7 minutes/team Presentation slides (upload to [pCloud](http://u.pc.cd/ArB)), contents:
-    1. A brief summary of your activities in the company (Provide your picture in the front of company big title & office activities with your mentor).
+    1. A brief summary of your activities in the company.
     2. High-level concept (use case) that you're working on in the company.
 - [ ] Promotional & Testimonial [Final Videos](https://u.pcloud.link/publink/show?code=kZcjSh5ZycYwg6EvFOh21AV5jdbJNRMAX097) (2-3 minutes/person)
+
 
 > [!NOTE]
 > Your internship report & Letter of Comlpletion will be issued only after the successful submission of all required documents.
