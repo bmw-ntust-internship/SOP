@@ -129,11 +129,11 @@ ssh user@<IP address>
 
 **Important Components to Include in System Architecture:**
 
-1. **IP Addresses** - Specify the IP address for each module/component
+1. **IP Addresses** - Specify IP address for each module/component
 2. **Connection Types** - Clear indication of connection types (WiFi, RJ-45, etc. ) & protocols (HTTP, TCP, UDP, WebSocket, etc.)
 3. **Sub-module Structure** - Show internal components and their relationships
 4. **Data Flow Direction** - Indicate request/response patterns
-5. **Port Numbers** - Specify communication ports
+5. **Port Numbers** - Specify communication ports.
 6. **Network Boundaries** - Show different network segments (DMZ, internal, external)
 
 

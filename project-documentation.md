@@ -89,7 +89,7 @@ graph TD
   - [UC3: Shutdown Cell](#uc3-shutdown-cell-1)
   - [UC4: Activate Cell](#uc4-activate-cell-1)
 - [Class Diagram](#class-diagram)
-- [System Parameters](#system-parameters)
+  - [System Parameters](#system-parameters)
 - [References](#references)
 
 ## Introduction
@@ -649,6 +649,8 @@ sequenceDiagram
 > 3. **Threshold Values**: Document criteria and parameters for decisions
 > 4. **Error Handling**: Show alternative paths for failure scenarios
 > 5. **Clear Styling**: Use consistent colors and ensure text readability
+>
+> **Guideline**: [Introduction of flowchart](https://www.geeksforgeeks.org/competitive-programming/an-introduction-to-flowcharts/)
 
 **Example:**
 
@@ -894,9 +896,26 @@ flowchart TD
 
 ## Class Diagram
 
+Before jumping into programming implementation, we need to define the:
+
+1. Classes of the system
+2. Parameters for each class
+3. Functions (Methods in Python) for each class
+
+We should follow the [Object-Oriented Programming (OOP)](https://realpython.com/python3-object-oriented-programming/) principles to design the software architecture.
+
+Furthermore, we need to add [adapter pattern design programming](https://refactoring.guru/design-patterns/abstract-factory), since our rApp and xApp might handles multi-vendor for the same RAN components.
+
 > [!NOTE]
-> **Guideline:** Define the software architecture using Object-Oriented Programming (OOP) principles. Include classes, attributes (following 3GPP standards), methods, and relationships (inheritance, composition, aggregation).
-> Include the parameters defined on the [System Parameters](#system-parameters) table.
+> **Guideline:** Define the software architecture using [Object-Oriented Programming (OOP)](https://realpython.com/python3-object-oriented-programming/) principles. Include:
+> 1. Classes
+> 2. Attributes/Parameters (following 3GPP standards)
+> 3. Functions/Methods
+> 4. Relationships (inheritance, composition, aggregation)
+> 
+> Then, specify your parameters references in the [System Parameters](#system-parameters) table, which define where can we find the standards (3GPP/IEEE) references of your parameters.
+>
+> Furthermore, we need to add [adapter pattern design programming](https://refactoring.guru/design-patterns/abstract-factory), since our rApp and xApp might handles multi-vendor for the same RAN components.
 >
 > **Required Content:**
 >
@@ -914,7 +933,7 @@ flowchart TD
 > - **Inheritance**: Show class hierarchies (e.g., `BaseXApp` → `EnergySavingXApp`)
 > - **Polymorphism**: Define overridable methods
 
-## System Parameters
+### System Parameters
 
 > [!NOTE]
 > **Guideline:** Define the input and output parameters used in the system, following 3GPP specifications. These parameters should be reflected in the class diagram attributes.
