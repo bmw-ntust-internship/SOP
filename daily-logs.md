@@ -1,114 +1,121 @@
 # Daily Plans and Logs
 
-> [!WARNING]
-> **Lab Hours**: `09:00` to `17:00` every working day  
-> **Plan ahead**: Write your daily plan before starting work  
-> **Log immediately**: Record completed tasks after finishing each one
-
-## Purpose
-
-Track your daily progress and ensure systematic completion of project milestones through two essential documents:
-
-1. **Milestones** (`milestones.md`): Project roadmap with all tasks, deadlines, and completion status
-2. **Daily Logs** (`daily-logs.md`): Time-stamped record of work performed, linking tasks to study notes
+> [!NOTE]
+> **Lab Hours**: `09:00` to `17:00` every working day
 
 ## Table of Contents
 
 - [Daily Plans and Logs](#daily-plans-and-logs)
-  - [Purpose](#purpose)
   - [Table of Contents](#table-of-contents)
-  - [Guidelines](#guidelines)
-    - [Milestones](#milestones)
-    - [Daily Logs](#daily-logs)
+  - [Purpose](#purpose)
+  - [Create Daily-log Card](#create-daily-log-card)
+  - [Writing Daily-log](#writing-daily-log)
+    - [Formatting Standards](#formatting-standards)
+    - [Auto Daily-log](#auto-daily-log)
 
-## Guidelines
+## Purpose
+
+This document describes how students track daily progress and ensure systematic completion of project milestones through two essential documents:
+
+1. **Milestones** (`milestones.md`): Project roadmap with all tasks, deadlines, and completion status
+2. **Daily Logs** (`daily-logs.md`): Time-stamped record of work performed, linking tasks to study notes
+
+
+## Create Daily-log Card
+
+1. Get access to our GitHub Projects ([lab-members](https://github.com/orgs/bmw-ece-ntust/projects/8) / [interns](https://github.com/orgs/bmw-ntust-internship/projects/4)) (contact our GitHub admin).
+2. Create your card based on the daily-log card template.
+3. Write the information below as the **GitHub Project card description** in the first comment of the card. The card description serves as the student's permanent profile and milestone reference on the project board.
+
+   **Example:**
+
+    ```markdown
+    **Profile Information**
+    - Name: <Full Name>
+    - Student ID: <Student ID>
+    - Email: <ntust.edu.tw email>
+    - Supervisor: Prof. Ray
+
+    **Projects**
+    1. Thesis: [<Thesis Title>](<GitHub repo link>)
+    2. Industrial Project: [<Project Name>](<GitHub repo link>)
+    3. Logistic Jobs: <e.g., Meeting administrator>
+
+    **Milestones**
+    - [ ] [<Milestone 1 Title>](<GitHub link>)
+    - [ ] [<Milestone 2 Title>](<GitHub link>)
+    ```
+
+## Writing Daily-log
+
+### Formatting Standards
+
+```markdown
+### yyyy/mm/dd
+
+**Short-term Goal**
+
+- [x] [TA rApp refactoring](Documentation link with 7-digit commit hash)
+
+**Daily-logs**:
+
+- `hh:mm - hh:mm`: [Task 1 Title](Documentation header link with 7-digit commit hash)
+- `hh:mm - hh:mm`: [Task 2 Title](Documentation header link with 7-digit commit hash)
+- <Upcoming targets>
+```
+
+Example:
+
+```markdown
+### 2026/04/22
+
+**Short-term Goal**
+
+- [x] [TA rApp refactoring](https://github.com/bmw-ece-ntust/nonrtric-rapp-test-automation/tree/7bd313d#test-automation-rapp)
+
+**Daily-logs**:
+
+- `09:00–10:30`: [Rebuild and Deploy TA rApp](https://github.com/bmw-ece-ntust/nonrtric-rapp-test-automation/tree/7bd313d#-rebuild--deploy-ta-rapp)
+- `10:30–12:00`: [Upload Test Spec](https://github.com/bmw-ece-ntust/nonrtric-rapp-test-automation/tree/7bd313d#-upload-test-specification-to-ta-rapp---test-spec-info)
+- <Upcoming targets>
+```
 
 > [!TIP]
-> **Formatting Standards**:
->
-> 1. Dates: `yyyy-mm-dd` format (e.g., `2025-10-18`)
-> 2. Time: `hh:mm–hh:mm` format (e.g., `09:00–11:30`)
-> 3. Auto-generate Table of Contents using [VS Code Markdown All in One](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one#table-of-contents)
-
-**Document Structure**: Link your study notes with milestones and daily logs as shown below:
+> Link study notes with milestones and daily logs as shown below:
 
 ![Daily log workflow diagram](./assets/daily-log.png)
 
-### Milestones
+**Key Principles**:
 
-**Purpose**: Create a master checklist of all projects, their milestones, and individual tasks.
+- One project = One markdown file ([installation/integration/user guide](./installation-guide.md) OR [project documentation](./project-documentation.md))
+- Hourly task = One section (markdown header) in the study note
+  - Task title = section header (## in the documentation)
+- Students log each task immediately after completion.
+- Students include accurate start and end times for each task.
+- Students specify which project to work on as their daily short-term goal.
 
-> [!TIP]
-> **Key Principles**:
+> [!WARNING]
 >
-> - One project = One study note (installation/integration/user guide)
-> - Each task = One section in the study note
-> - Task title must match its section header exactly
-> - Link completed tasks to their documentation
-
-**File**: Create `./milestones.md` in your project repository.
-
-**Template**:
-
-```markdown
-# Milestones
-
-## Table of Contents
-
-<!-- Auto-generated by Markdown All in One -->
-
-## Project Title
-
-### Milestone 1: <Milestone Name>
-
-- [x] [1.1 Task Title](https://github.com/bmw-ece-ntust/<repo>/blob/<7-digit commit hash>/<study-note>.md#<task-section>)
-- [x] [1.2 Task Title](https://github.com/bmw-ece-ntust/<repo>/blob/<7-digit commit hash>/<study-note>.md#<task-section>)
-- [ ] 1.3 Task Title
-
-### Milestone 2: <Milestone Name>
-
-- [x] [2.1 Task Title](https://github.com/bmw-ece-ntust/<repo>/blob/<7-digit commit hash>/<study-note>.md#<task-section>)
-- [ ] 2.2 Task Title
-- [ ] 2.3 Task Title
-```
-
-### Daily Logs
-
-**Purpose**: Record daily activities with timestamps, linking each task to its documentation section.
-
-> [!TIP]
-> **Best Practices**:
+> Each finished task must be linked to a documentation header link (**with 7-digit commit hash**) in the markdown file.
 >
-> - Log immediately after completing each task
-> - Include accurate start and end times for each task
-> - Link every task to its study note section
-> - Set which project to be done as your daily short-term goal
+> The 7-digit commit hash ensures **the link is always available**, even if the document is renamed/moved.
 
-**File**: Create `./daily-logs.md` in your project repository
+**How to get the commit hash URL:**
 
-**Template**:
+1. Open the documentation in GitHub from the commit history (the 7-digit hash appears in the browser URL).
+2. Click the designated section header link.
+3. Copy the URL. Use either the full URL or shorten it to keep only the 7-digit commit hash.
 
-```markdown
-# Daily Plan & Logs
+### Auto Daily-log
 
-**Name**: <Your Full Name>  
-**Student ID**: <Your ID>  
-**Enrollment**:
+1. Students commit all activity to the lab's GitHub Organizations or Prof. Ray's repositories using the following prompt:
 
-- Program: <M.S. / Ph.D.>
-- Year: <Fall/Spring> <Year>
+    ```markdown
+    git message, summary, commit, and push
 
-## Table of Contents
+    Write the summary of my activity, and detail of my activity (using numbering points) on the message section.
+    ```
 
-<!-- Auto-generated by Markdown All in One -->
-
-## 2025-10-18
-
-**Short-term Goal**: [Project Title](https://github.com/bmw-ece-ntust/<repo>/blob/<7-digit commit hash>/<study-note>.md)
-
-**Daily Logs**:
-
-- `09:00–11:30`: [Task 1 Title](https://github.com/bmw-ece-ntust/<repo>/blob/<7-digit commit hash>/<study-note>.md#task-1-section)
-- `13:00–15:45`: [Task 2 Title](https://github.com/bmw-ece-ntust/<repo>/blob/<7-digit commit hash>/<study-note>.md#task-2-section)
-- `16:00–17:00`: [Task 3 Title](https://github.com/bmw-ece-ntust/<repo>/blob/<7-digit commit hash>/<study-note>.md#task-3-section)
-```
+2. Students generate daily logs automatically using an LLM by following the steps below:
+   1. The student prompts the LLM to analyze the commit history (filtered from the lab's GitHub Organizations).
+   2. The student reviews and edits the generated daily log to ensure accuracy and completeness before posting it to GitHub Projects.
