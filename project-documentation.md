@@ -5,7 +5,7 @@
 > [!WARNING]
 >
 > 1. Use this template as the `README.md` of your main research repository.
-> 
+>
 > 2. The [SOP template of project documentation](https://github.com/bmw-ece-ntust/SOP/blob/master/project-documentation.md) is regularly updated.  
 > Please check it regularly.
 
