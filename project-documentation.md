@@ -935,6 +935,13 @@ Furthermore, we need to add [adapter pattern design programming](https://refacto
 
 ### System Parameters
 
+> [!IMPORTANT]
+> **Parameter Reference Convention (mandatory):**
+> Every parameter name in this table — and anywhere it appears in documentation, diagrams, or code docstrings — **must** be hyperlinked to its authoritative specification (3GPP TS, O-RAN spec, or IEEE standard) with the exact section and page/paragraph reference.
+>
+> Use the format: `[PARAM_NAME](spec-zip-url) (TS XX.XXX §Y.Z, Table Y.Z-1, p.N)`.
+> See [source-code-guide.md §8](./source-code-guide.md#8-standards--parameter-reference-convention) for the full convention and archive URLs.
+
 > [!NOTE]
 > **Guideline:** Define the input and output parameters used in the system, following 3GPP specifications. These parameters should be reflected in the class diagram attributes.
 >
@@ -943,29 +950,29 @@ Furthermore, we need to add [adapter pattern design programming](https://refacto
 > 1. **Input Parameters**: System inputs (e.g., KPIs from E2 interface, A1 policies)
 > 2. **Output Parameters**: System outputs (e.g., control decisions, cell status)
 > 3. **3GPP Standards**: Reference TS specifications for each parameter with hyperlinks
-> 4. **Parameter Table**: Include columns for Category, Parameter, Type, 3GPP Spec, Unit, Description, Range, Source/Destination
+> 4. **Parameter Table**: Include columns for Category, Parameter, Type, Unit, Standard, Spec Section, **Page / §**, Description
 
 **Example:**
 
-| Category               | Parameter              | Type    | Unit       | 3GPP Spec                                                                                      | Description                             |
-| ---------------------- | ---------------------- | ------- | ---------- | ---------------------------------------------------------------------------------------------- | --------------------------------------- |
-| **E2 KPM Inputs**      | `DRB.PrbUtilDL`        | Float   | %          | [TS 28.552 §5.1.1.12.1](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip) | Downlink PRB utilization                |
-|                        | `DRB.PrbUtilUL`        | Float   | %          | [TS 28.552 §5.1.1.12.2](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip) | Uplink PRB utilization                  |
-|                        | `DRB.UEThpDL`          | Float   | kbps       | [TS 28.552 §5.1.1.10.1](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip) | DL UE throughput                        |
-|                        | `DRB.UEThpUL`          | Float   | kbps       | [TS 28.552 §5.1.1.10.2](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip) | UL UE throughput                        |
-|                        | `RRC.ConnectedUE`      | Integer | count      | [TS 28.552 §5.1.1.1.1](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip)  | Number of active UEs                    |
-| **E2 RC Outputs**      | `cellActivationCmd`    | Enum    | -          | [TS 38.331 §6.2.2](https://www.3gpp.org/ftp/Specs/archive/38_series/38.331/38331-i40.zip)      | Cell activation command                 |
-|                        | `handoverCmd`          | Struct  | -          | [TS 38.300 §9.2.3.2](https://www.3gpp.org/ftp/Specs/archive/38_series/38.300/38300-i00.zip)    | Handover command                        |
-|                        | `targetCellId`         | String  | -          | [TS 36.413 §9.1.2.1](https://www.3gpp.org/ftp/Specs/archive/36_series/36.413/36413-i10.zip)    | Target cell identifier                  |
-| **A1 Policy Inputs**   | `prbThresholdLow`      | Float   | %          | [O-RAN.WG2.A1AP-v06.00 §8.2](https://specifications.o-ran.org/)                                | Low PRB threshold for cell sleep        |
-|                        | `prbThresholdHigh`     | Float   | %          | [O-RAN.WG2.A1AP-v06.00 §8.2](https://specifications.o-ran.org/)                                | High PRB threshold for cell wake        |
-|                        | `durationThresholdSec` | Integer | seconds    | [O-RAN.WG2.A1AP-v06.00 §8.2](https://specifications.o-ran.org/)                                | Minimum duration before action          |
-| **Radio Measurements** | `RSRP`                 | Integer | dBm        | [TS 36.214 §5.1.1](https://www.3gpp.org/ftp/Specs/archive/36_series/36.214/36214-i40.zip)      | Reference Signal Received Power         |
-|                        | `RSRQ`                 | Integer | dB         | [TS 36.214 §5.1.2](https://www.3gpp.org/ftp/Specs/archive/36_series/36.214/36214-i40.zip)      | Reference Signal Received Quality       |
-|                        | `SINR`                 | Integer | dB         | [TS 36.214 §5.1.4](https://www.3gpp.org/ftp/Specs/archive/36_series/36.214/36214-i40.zip)      | Signal to Interference plus Noise Ratio |
-| **O1 VES Events**      | `cellStatusChange`     | Event   | -          | [TS 28.532 §5.2.6.2](https://www.3gpp.org/ftp/Specs/archive/28_series/28.532/28532-i50.zip)    | Cell state change notification          |
-|                        | `energySavingEstimate` | Float   | Watts      | -                                                                                              | Estimated power savings                 |
-|                        | `timestamp`            | Long    | Unix epoch | [TS 28.532 §5.1](https://www.3gpp.org/ftp/Specs/archive/28_series/28.532/28532-i50.zip)        | Event timestamp                         |
+| Category               | Parameter              | Type    | Unit       | Standard                                                                                        | Spec Section    | Page / §            | Description                             |
+| ---------------------- | ---------------------- | ------- | ---------- | ----------------------------------------------------------------------------------------------- | --------------- | ------------------- | --------------------------------------- |
+| **E2 KPM Inputs**      | [`DRB.PrbUtilDL`](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip)        | Float   | %          | TS 28.552 | §5.1.1.12.1 | Table 5.1.1.12.1-1, p.47 | Downlink PRB utilization                |
+|                        | [`DRB.PrbUtilUL`](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip)        | Float   | %          | TS 28.552 | §5.1.1.12.2 | Table 5.1.1.12.2-1, p.48 | Uplink PRB utilization                  |
+|                        | [`DRB.UEThpDL`](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip)          | Float   | kbps       | TS 28.552 | §5.1.1.10.1 | Table 5.1.1.10.1-1, p.44 | DL UE throughput                        |
+|                        | [`DRB.UEThpUL`](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip)          | Float   | kbps       | TS 28.552 | §5.1.1.10.2 | Table 5.1.1.10.2-1, p.45 | UL UE throughput                        |
+|                        | [`RRC.ConnectedUE`](https://www.3gpp.org/ftp/Specs/archive/28_series/28.552/28552-i50.zip)      | Integer | count      | TS 28.552 | §5.1.1.1.1  | Table 5.1.1.1.1-1, p.21  | Number of active UEs                    |
+| **E2 RC Outputs**      | [`cellActivationCmd`](https://www.3gpp.org/ftp/Specs/archive/38_series/38.331/38331-i40.zip)    | Enum    | -          | TS 38.331 | §6.2.2      | §6.2.2, p.184             | Cell activation command                 |
+|                        | [`handoverCmd`](https://www.3gpp.org/ftp/Specs/archive/38_series/38.300/38300-i00.zip)          | Struct  | -          | TS 38.300 | §9.2.3.2    | §9.2.3.2, p.67            | Handover command                        |
+|                        | [`targetCellId`](https://www.3gpp.org/ftp/Specs/archive/36_series/36.413/36413-i10.zip)         | String  | -          | TS 36.413 | §9.1.2.1    | §9.1.2.1, p.33            | Target cell identifier                  |
+| **A1 Policy Inputs**   | `prbThresholdLow`      | Float   | %          | [O-RAN.WG2.A1AP-v06.00 §8.2](https://specifications.o-ran.org/) | §8.2 | §8.2, p.31 | Low PRB threshold for cell sleep        |
+|                        | `prbThresholdHigh`     | Float   | %          | [O-RAN.WG2.A1AP-v06.00 §8.2](https://specifications.o-ran.org/) | §8.2 | §8.2, p.31 | High PRB threshold for cell wake        |
+|                        | `durationThresholdSec` | Integer | seconds    | [O-RAN.WG2.A1AP-v06.00 §8.2](https://specifications.o-ran.org/) | §8.2 | §8.2, p.32 | Minimum duration before action          |
+| **Radio Measurements** | [`RSRP`](https://www.3gpp.org/ftp/Specs/archive/36_series/36.214/36214-i40.zip)                 | Integer | dBm        | TS 36.214 | §5.1.1      | §5.1.1, p.9               | Reference Signal Received Power         |
+|                        | [`RSRQ`](https://www.3gpp.org/ftp/Specs/archive/36_series/36.214/36214-i40.zip)                 | Integer | dB         | TS 36.214 | §5.1.2      | §5.1.2, p.10              | Reference Signal Received Quality       |
+|                        | [`SINR`](https://www.3gpp.org/ftp/Specs/archive/36_series/36.214/36214-i40.zip)                 | Integer | dB         | TS 36.214 | §5.1.4      | §5.1.4, p.12              | Signal to Interference plus Noise Ratio |
+| **O1 VES Events**      | [`cellStatusChange`](https://www.3gpp.org/ftp/Specs/archive/28_series/28.532/28532-i50.zip)     | Event   | -          | TS 28.532 | §5.2.6.2    | §5.2.6.2, p.28            | Cell state change notification          |
+|                        | `energySavingEstimate` | Float   | Watts      | —         | —           | —                         | Estimated power savings                 |
+|                        | [`timestamp`](https://www.3gpp.org/ftp/Specs/archive/28_series/28.532/28532-i50.zip)            | Long    | Unix epoch | TS 28.532 | §5.1        | §5.1, p.16                | Event timestamp                         |
 
 **Example:**
 
