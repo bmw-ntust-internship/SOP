@@ -1,7 +1,10 @@
 # Daily Plans and Logs
 
 > [!NOTE]
-> **Lab Hours**: `09:00` to `17:00` every working day
+> **Lab Hours**: `09:00` to `17:00` every working day.
+
+> [!CAUTION]
+> Do not take any action before planning, it will waste our time.
 
 ## Table of Contents
 
@@ -12,6 +15,7 @@
   - [Writing Daily-log](#writing-daily-log)
     - [Formatting Standards](#formatting-standards)
     - [Auto Daily-log](#auto-daily-log)
+      - [Generating the Daily-Log Entry](#generating-the-daily-log-entry)
 
 ## Purpose
 
@@ -87,7 +91,7 @@ Example:
 
 **Key Principles**:
 
-- One project = One markdown file ([installation/integration/user guide](./installation-guide.md) OR [project documentation](./project-documentation.md))
+- One project = One markdown file ([integration/user guide](./integration-guide.md) OR [project documentation](./project-documentation.md))
 - Hourly task = One section (markdown header) in the study note
   - Task title = section header (## in the documentation)
 - Students log each task immediately after completion.
@@ -108,14 +112,104 @@ Example:
 
 ### Auto Daily-log
 
-1. Students commit all activity to the lab's GitHub Organizations or Prof. Ray's repositories using the following prompt:
+Students commit all activity to the lab's GitHub Organizations or Prof. Ray's repositories using one of the two prompts below. Use **Prompt A** when the BMW Lab VM is reachable; use **Prompt B** when offline or the tunnel is unavailable.
 
-    ```markdown
-    git message, summary, commit, and push
+<!-- ---
 
-    Write the summary of my activity, and detail of my activity (using numbering points) on the message section.
-    ```
+#### Prompt A — With Long-Term Memory (MySQL)
 
-2. Students generate daily logs automatically using an LLM by following the steps below:
-   1. The student prompts the LLM to analyze the commit history (filtered from the lab's GitHub Organizations).
-   2. The student reviews and edits the generated daily log to ensure accuracy and completeness before posting it to GitHub Projects.
+> [!IMPORTANT]
+> Requires the SSH tunnel to be active (`localhost:3307 → wifi@140.118.122.119:3306`) and the `mysql-memory` MCP server connected in Claude Code. See [LLM Long-Term Memory Setup](./lab-automation/llm-memory.md).
+
+```markdown
+Reconcile CLAUDE.md with the current state of the repository. Check: file list (add new files, update renamed/deleted entries), terminology, conventions, and external links. CLAUDE.md is a static knowledge snapshot for LLMs — do not log session activity or prompting history.
+
+Then:
+
+0. Check MySQL connectivity: run `nc -z 140.118.122.119 3306 && echo OK || echo UNREACHABLE`.
+   - If **OK** → proceed with steps 1–5.
+   - If **UNREACHABLE** → stop and warn the user:
+     > ⚠️ Cannot reach the BMW Lab VM MySQL database (140.118.122.119:3306).
+     > The VM may be down or the network is unavailable. Please either:
+     > - Verify the VM is reachable and retry; or
+     > - Switch to Prompt B (no long-term memory) and confirm to proceed with commit only.
+
+1. Log this session to the long-term memory MySQL database on the VM (see [LLM Long-Term Memory Setup](./lab-automation/llm-memory.md)):
+   a. Run `git config user.name` and `git config user.email` to capture the committer identity.
+   b. Insert a row into `sessions` with: GitHub username, email, repo name (from `git remote get-url origin`), session start/end timestamps, latest commit hash, and the short commit title you plan to use.
+   c. Insert one row per key prompt–response exchange into `prompts` (tool name, timestamp, prompt summary, response summary).
+   d. Insert a row into `session_summaries` with a one-paragraph summary of the session's work — this becomes the **"Summary"** field in the git commit message below.
+   e. After pushing, run `UPDATE sessions SET result_commit = '<new hash>' WHERE id = <sid>;`.
+2. Run `git log -1 --format="%H %ai"` to get the latest commit hash and its timestamp.
+3. Collect all prompting activity from this session across both tools:
+   - **GitHub Copilot**: Read the session log at `{{VSCODE_TARGET_SESSION_LOG}}`.
+   - **Claude** (claude.ai / Claude Desktop): Check the Claude conversation history for the same session manually.
+   - Use the **first user message timestamp across either tool** that falls after the latest commit (= session start).
+   - Use the **last user message timestamp across either tool** (= session end).
+4. Format the working session(s):
+   - Single calendar day → one line: `yyyy/mm/dd: hh.mm - hh.mm`
+   - Multiple calendar days → one line per day: `yyyy/mm/dd: hh.mm - hh.mm`
+5. Commit and push all changes using the git message format below, deriving fields from the MySQL records:
+   - **Title**: the `commit_title` stored in `sessions`
+   - **Session**: formatted from `sessions.start_at` / `sessions.end_at`
+   - **Summary**: copied from `session_summaries.summary`
+
+---
+
+<Short imperative summary title>
+
+Session:
+yyyy/mm/dd: hh.mm - hh.mm
+
+Summary:
+<One-paragraph summary of what changed and why>
+
+Details:
+1. <Specific change 1>
+2. <Specific change 2>
+```
+
+---
+
+#### Prompt B — Without Long-Term Memory -->
+
+> [!NOTE]
+> Use this prompt when offline, the SSH tunnel is unavailable, or the `mysql-memory` MCP server is not connected. No database insert is performed — session history is derived from git log and the conversation history only.
+
+```markdown
+Reconcile CLAUDE.md with the current state of the repository. Check: file list (add new files, update renamed/deleted entries), terminology, conventions, and external links. CLAUDE.md is a static knowledge snapshot for LLMs — do not log session activity or prompting history.
+
+Then:
+
+1. Run `git log -1 --format="%H %ai"` to get the latest commit hash and its timestamp.
+2. Collect session timestamps from this conversation:
+   - **GitHub Copilot**: Read the session log at `{{VSCODE_TARGET_SESSION_LOG}}`.
+   - **Claude** (claude.ai / Claude Desktop): Check the Claude conversation history for the same session manually.
+   - Use the **first user message timestamp across either tool** that falls after the latest commit (= session start).
+   - Use the **last user message timestamp across either tool** (= session end).
+3. Format the working session(s):
+   - Single calendar day → one line: `yyyy/mm/dd: hh.mm - hh.mm`
+   - Multiple calendar days → one line per day: `yyyy/mm/dd: hh.mm - hh.mm`
+4. Write a one-paragraph summary of what was accomplished this session — this becomes the **"Summary"** field below.
+5. Remove any LLMs from the co-author list.
+6. Commit and push all changes using the git message format below:
+
+---
+
+<Short imperative summary title>
+
+Work Start: <hh:mm>
+
+Summary:
+<One-paragraph summary of what changed and why>
+
+Details:
+1. <Specific change 1>
+2. <Specific change 2>
+```
+
+---
+
+#### Generating the Daily-Log Entry
+
+After committing (with either prompt), generate the daily-log card entry by prompting the LLM to analyze the commit history filtered from the lab's GitHub Organizations. Review and edit the generated entry for accuracy before posting it to GitHub Projects.
