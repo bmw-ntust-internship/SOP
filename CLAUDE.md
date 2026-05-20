@@ -24,6 +24,7 @@ The primary audience is:
 SOP/
 ├── README.md                  # Main SOP overview — entry point for all lab rules
 ├── daily-log.md               # How to write daily plans and logs (format, workflow, automation)
+├── leaving-procedure.md       # Full leaving procedure: graduation, professor change policy, handover checklists, NDA requirement
 ├── .github/
 │   ├── copilot-instructions.md  # GitHub Copilot project instructions (mirrors CLAUDE.md purpose)
 │   └── workflows/
@@ -38,6 +39,8 @@ SOP/
 ├── source-code-guide.md       # Source code standards: OOP, design patterns (Adapter/Factory/Strategy), Sphinx/Doxygen, folder structure
 ├── CLAUDE.md                  # This file — LLM project knowledge
 ├── assets/                    # Images and static assets
+├── NDA/
+│   └── nda-template.md        # Lab Non-Disclosure Agreement template — signed by all departing members before the Professor approves their departure
 ├── lab-automation/
 │   ├── credentials-vault.md   # Credential management practices
 │   └── llm-memory.md          # MySQL long-term memory setup for LLM prompts and session summaries
@@ -128,6 +131,9 @@ Push to `origin/master` (this repo uses a single `master` branch).
 
 ## How to Maintain This File
 
+> [!IMPORTANT]
+> **Only reconcile this file and run `git commit` / `git push` when the user explicitly issues the command.** Do not perform these steps automatically at the end of a session.
+
 At the end of each working session, students run the following prompt to keep this file up to date:
 
 > Reconcile CLAUDE.md with the current state of the repository.
@@ -175,3 +181,5 @@ LIMIT 5;
 ```
 
 **At the END of every session** (before the git commit), insert the session record, prompts, and summary into the database following Section 4 of `lab-automation/llm-memory.md`. Then update `result_commit` after pushing.
+
+> **Agent rule:** Only execute the reconcile-CLAUDE.md and git commit/push steps when the user explicitly inserts the command. Do not run these automatically.
