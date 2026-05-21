@@ -158,6 +158,7 @@ At the end of each working session, students run the following prompt to keep th
 ## Important External Links
 
 - **BMW Lab GitHub Org**: https://github.com/orgs/bmw-ece-ntust
+- **BMW Lab YouTube Channel**: https://www.youtube.com/@ntust.bmw-lab
 - **Lab Members GitHub Project board**: https://github.com/orgs/bmw-ece-ntust/projects/8
 - **Interns GitHub Project board**: https://github.com/orgs/bmw-ntust-internship/projects/4
 - **Project template repo**: https://github.com/bmw-ece-ntust/template
