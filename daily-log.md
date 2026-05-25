@@ -177,7 +177,15 @@ Details:
 > Use this prompt when offline, the SSH tunnel is unavailable, or the `mysql-memory` MCP server is not connected. No database insert is performed — session history is derived from git log and the conversation history only.
 
 ```markdown
-Reconcile CLAUDE.md with the current state of the repository. Check: file list (add new files, update renamed/deleted entries), terminology, conventions, and external links. CLAUDE.md is a static knowledge snapshot for LLMs — do not log session activity or prompting history.
+Reconcile all 4 project memory files with the current state of the repository.
+
+**CLAUDE.md** — check file list (add new files, update renamed/deleted entries), terminology, conventions, and external links. This is a static knowledge snapshot for LLMs — do not log session activity or prompting history.
+
+**CONTEXT.md** — update architecture overview, key files map, and any changed external services or environment notes to reflect the current repo state.
+
+**MEMORY.md** — append a new dated entry (`## yyyy-mm-dd`) summarizing decisions made, patterns established, or gotchas discovered this session. Do not edit past entries.
+
+**TODO.md** — mark completed items as `[x]`, remove stale tasks, and add any new tasks uncovered this session. Re-prioritize if needed under **Now / Next / Later**.
 
 Then:
 
@@ -192,7 +200,7 @@ Then:
    - Multiple calendar days → one line per day: `yyyy/mm/dd: hh.mm - hh.mm`
 4. Write a one-paragraph summary of what was accomplished this session — this becomes the **"Summary"** field below.
 5. Remove any LLMs from the co-author list.
-6. Commit and push all changes using the git message format below:
+6. Stage all changes including CLAUDE.md, CONTEXT.md, MEMORY.md, and TODO.md, then commit and push using the git message format below:
 
 ---
 

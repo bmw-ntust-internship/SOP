@@ -37,7 +37,10 @@ SOP/
 ├── paper-writing.md           # Steps and tips for writing and revising IEEE papers
 ├── project-documentation.md   # Guidelines for project documentation (architecture, diagrams)
 ├── source-code-guide.md       # Source code standards: OOP, design patterns (Adapter/Factory/Strategy), Sphinx/Doxygen, folder structure
-├── CLAUDE.md                  # This file — LLM project knowledge
+├── CLAUDE.md                  # This file — LLM knowledge snapshot (static)
+├── CONTEXT.md                 # Living architecture overview: key files map, external services, git convention
+├── MEMORY.md                  # Append-only session decisions log (one dated entry per session)
+├── TODO.md                    # Task backlog: Now / Next / Later
 ├── assets/                    # Images and static assets
 ├── NDA/
 │   └── nda-template.md        # Lab Non-Disclosure Agreement template — signed by all departing members before the Professor approves their departure
@@ -134,12 +137,12 @@ Push to `origin/master` (this repo uses a single `master` branch).
 > [!IMPORTANT]
 > **Only reconcile this file and run `git commit` / `git push` when the user explicitly issues the command.** Do not perform these steps automatically at the end of a session.
 
-At the end of each working session, students run the following prompt to keep this file up to date:
+At the end of each working session, students use **Prompt B** (defined in `daily-log.md §Auto Daily-log`) to reconcile all 4 project memory files and commit the result:
 
-> Reconcile CLAUDE.md with the current state of the repository.
-> Check: file list (add new files, update renamed/deleted entries), terminology, conventions, and external links.
-> CLAUDE.md is a static knowledge snapshot for LLMs — do not log session activity or prompting history.
-> Then commit and push all changes using the standard git commit format (including Work Start timestamp as defined in the Git Commit Convention section).
+- **CLAUDE.md** — static snapshot: file list, terminology, conventions, external links
+- **CONTEXT.md** — living architecture overview: key files, external services, environment notes
+- **MEMORY.md** — append-only decisions log: one `## yyyy-mm-dd` entry per session
+- **TODO.md** — task backlog: mark done, add new, re-prioritize under Now / Next / Later
 
 **What belongs here:**
 - New files added to the repo (with descriptions)
@@ -159,6 +162,7 @@ At the end of each working session, students run the following prompt to keep th
 
 - **BMW Lab GitHub Org**: https://github.com/orgs/bmw-ece-ntust
 - **BMW Lab YouTube Channel**: https://www.youtube.com/@ntust.bmw-lab
+- **Daily-Log Automation Repo**: [bmw-ece-ntust/progress-plan](https://github.com/bmw-ece-ntust/progress-plan) (local clone: `~/Documents/GitHub/daily-logs/`, tool at `src/dailylog/`)
 - **Lab Members GitHub Project board**: https://github.com/orgs/bmw-ece-ntust/projects/8
 - **Interns GitHub Project board**: https://github.com/orgs/bmw-ntust-internship/projects/4
 - **Project template repo**: https://github.com/bmw-ece-ntust/template
