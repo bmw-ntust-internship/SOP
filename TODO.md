@@ -11,7 +11,7 @@
 - [ ] Create `simulation-guide.md` template (referenced in README Section 4 and handover item 5.2.7 but file does not exist)
 - [ ] Review `leaving-procedure.md` for consistency with new Sections 5.1 / 5.2 structure
 - [ ] Add new features to `progress-plan` daily-log automation tool
-- [ ] Test Prompt A (MySQL) full flow when BMW Lab VM SSH tunnel is available
+- [ ] Verify PostgreSQL LTM (llm-skill-ltm) recall + SessionStart hook end-to-end when the BMW Lab box SSH tunnel is available
 
 ## Later
 

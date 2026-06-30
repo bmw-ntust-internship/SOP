@@ -28,3 +28,36 @@ Append-only. Do not edit past entries. Add one `## yyyy-mm-dd` block per session
 - `git mv` fails on untracked (new) files — use plain `mv` + `git add` instead.
 - Force-push was needed to fix author on an already-pushed commit; remote allowed it with a "Bypassed rule violations" warning despite a branch protection rule.
 - Apparent git state confusion mid-session: `ea0fab6` showed as HEAD despite earlier commits. Cause: the `ea0fab6` commit was already in the remote and incorporated all session changes; local HEAD matched remote after sync.
+
+---
+
+## 2026-06-26
+
+### Decisions
+
+- LTM migrated from MySQL to **per-user PostgreSQL**, managed by the `bmw-ece-ntust/llm-skill-ltm` repo. The earlier MySQL `llm_memory` setup (Prompt A, `mysql-memory` MCP) is retired and removed from all active docs. `lab-automation/llm-memory.md` rewritten as a PostgreSQL overview pointing to `llm-skill-ltm`; the SessionStart hook there records activity automatically in both Claude Code and Cowork.
+- LTM `metadata` now keeps `owner` (the GitHub account that owns the repo, org or personal) and `repo` (name only) as **separate fields**, so daily-log activities group per project.
+- `daily-log.md` format updated: each daily-log bullet is one session on one project, tagged `[owner/repo]`, with required `hh:mm - hh:mm` start/end times. Tasks may overlap because agentic AI runs tasks concurrently. The auto-commit `Work Start` field now carries a `yyyy/mm/dd: hh.mm - hh.mm` range.
+
+### Patterns Established
+
+- Project identity in the LTM and in daily-log bullets is always `owner` + `repo` as separate fields/tags, never a single `owner/repo` string embedded in the repo field.
+- Overlapping daily-log time ranges across different `[owner/repo]` projects are expected and allowed.
+
+### Gotchas
+
+- `MEMORY.md` is append-only: the prior MySQL mention in the 2026-05-25 entry stays as a historical record; this entry supersedes it rather than editing it.
+
+---
+
+## 2026-06-29
+
+### Decisions
+
+- Committed the accumulated PostgreSQL-LTM migration work (docs rewrite across `daily-log.md`, `lab-automation/llm-memory.md`, `project-documentation.md`, `source-code-guide.md`, copilot-instructions, and the 4 project files) together as one daily-log push.
+- Adopted `AGENTS.md` as the tool-neutral preference base (seeded by `sync-to-all-repos.sh`); `CLAUDE.md` and other tool adapters defer to it. Added it and `.claude/settings.json` to the CLAUDE.md / CONTEXT.md file maps.
+- Push performed across all 5 dirty "llm-refs" repos in one go: SOP, llm-prefs, daily-log, progress-plan (daily-logs), llm-skill-logging.
+
+### Gotchas
+
+- `.claude/settings.local.json`, `.claude/model-policy.state.json`, and `graphify-out/` are now gitignored; `.claude/settings.json` (the per-repo model/effort pin) is tracked and committed.

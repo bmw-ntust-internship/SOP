@@ -1,0 +1,19 @@
+{
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git check-ignore *)",
+      "Bash(echo \"exit=$?\")",
+      "Bash(git commit *)"
+    ],
+    "defaultMode": "bypassPermissions",
+    "additionalDirectories": [
+      "~/.claude",
+      "~/Documents/GitHub"
+    ]
+  },
+  "skipDangerousModePermissionPrompt": true
+}

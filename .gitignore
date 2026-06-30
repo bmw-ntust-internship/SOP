@@ -1,1 +1,4 @@
 .DS_Store
+.claude/settings.local.json
+.claude/model-policy.state.json
+graphify-out/

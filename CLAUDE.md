@@ -29,7 +29,7 @@ SOP/
 │   ├── copilot-instructions.md  # GitHub Copilot project instructions (mirrors CLAUDE.md purpose)
 │   └── workflows/
 │       └── sync-sop.yml         # GitHub Actions workflow: auto-syncs selected SOP files to the intern org repo
-├── .gitignore                 # Git ignore rules (e.g., .DS_Store)
+├── .gitignore                 # Git ignore rules (.DS_Store, .claude/settings.local.json, graphify-out/)
 ├── .vscode/
 │   └── mcp.json                 # VS Code MCP server config (Microsoft 365 Agents Toolkit MCP)
 ├── integration-guide.md       # Guideline for writing integration guides (covers installation, end-to-end integration, and post-installation verification for O-RAN interfaces)
@@ -37,6 +37,9 @@ SOP/
 ├── paper-writing.md           # Steps and tips for writing and revising IEEE papers
 ├── project-documentation.md   # Guidelines for project documentation (architecture, diagrams)
 ├── source-code-guide.md       # Source code standards: OOP, design patterns (Adapter/Factory/Strategy), Sphinx/Doxygen, folder structure
+├── AGENTS.md                  # Tool-neutral AI-agent preference base; tool adapters (CLAUDE.md) defer to it (seeded by sync-to-all-repos.sh)
+├── .claude/
+│   └── settings.json          # Per-repo Claude model/effort pin (settings.local.json is gitignored)
 ├── CLAUDE.md                  # This file — LLM knowledge snapshot (static)
 ├── CONTEXT.md                 # Living architecture overview: key files map, external services, git convention
 ├── MEMORY.md                  # Append-only session decisions log (one dated entry per session)
@@ -46,7 +49,7 @@ SOP/
 │   └── nda-template.md        # Lab Non-Disclosure Agreement template — signed by all departing members before the Professor approves their departure
 ├── lab-automation/
 │   ├── credentials-vault.md   # Credential management practices
-│   └── llm-memory.md          # MySQL long-term memory setup for LLM prompts and session summaries
+│   └── llm-memory.md          # PostgreSQL long-term memory setup (per-user; managed by llm-skill-ltm)
 ├── lab-internal/
 │   └── stipend.md             # Stipend-related information
 ├── logistics/
@@ -110,7 +113,9 @@ When committing changes to this repo, use the following structure:
 ```
 <Short imperative summary title>
 
-Work Start: yyyy/mm/dd: hh.mm - hh.mm
+work duration:
+- yyyy/mm/dd_hh:mm - hh:mm (N.Nh): <what was done that day, from the LTM>
+- yyyy/mm/dd_hh:mm - hh:mm (N.Nh): <what was done that day, from the LTM>
 
 Summary:
 <One-paragraph summary of what changed and why>
@@ -122,11 +127,11 @@ Details:
 Co-authored-by: Ian Joseph Chandra <ianjoseph2204@gmail.com>
 ```
 
-**Work Start field rules:**
-- Use the `session_start` `ts` field from the Copilot session log (converted to local time) as the start time, provided it falls after the latest commit.
-- Use the last user message timestamp of the session as the end time.
-- Format: `yyyy/mm/dd: hh.mm - hh.mm` (24-hour local time, dots as separators).
-- Multiple calendar days → one line per day: `yyyy/mm/dd: hh.mm - hh.mm`.
+**Working hour field rules** (see `daily-log.md`, Auto Daily-log, "Determine the working hour"):
+- A single push can cover work done across several days. Reconstruct the hours and activities **per day** from the LTM (`worklog`/`activity` rows after the last commit), not from the commit date.
+- One `work duration` line per day: `yyyy/mm/dd_hh:mm - hh:mm (N.Nh): <activities that day>`. Hours are that day's summed session durations; activities are distilled from that day's LTM sessions.
+- A single-day session collapses to one line: `work duration: yyyy/mm/dd_hh:mm - hh:mm`.
+- All times are 24-hour Asia/Taipei. The whole-span start is the earliest user-message timestamp after the latest commit.
 
 Push to `origin/master` (this repo uses a single `master` branch).
 
@@ -171,20 +176,19 @@ At the end of each working session, students use **Prompt B** (defined in `daily
 
 ---
 
-## Long-Term Memory (MySQL)
+## Long-Term Memory (PostgreSQL)
 
-A `mysql-memory` MCP server is configured and connects directly to `llm_memory` on the BMW Lab VM at `140.118.122.119:3306`.
+The lab long-term memory is a **per-user PostgreSQL** store on the BMW Lab box (one DB per member, role named after the GitHub username), reached over an SSH tunnel. It is managed by the [`llm-skill-ltm`](https://github.com/bmw-ece-ntust/llm-skill-ltm) repo and replaces the previous MySQL setup. No raw prompts/responses are stored — only distilled knowledge plus `activity` and `worklog` rows attributed by GitHub account. Each row's `metadata` keeps `owner` (the GitHub account, org or personal) and `repo` (name only) as separate fields, so activities group per project for the daily-log. Setup and usage: `lab-automation/llm-memory.md`.
 
-**At the START of every session**, load recent context:
+**At the START of every session**, recall recent work for the current project with the `memory` skill (recall-by-repo):
 
 ```sql
-SELECT s.github_username, s.repo, s.start_at, s.end_at, s.commit_title, ss.summary
-FROM sessions s
-JOIN session_summaries ss ON ss.session_id = s.id
-ORDER BY s.start_at DESC
-LIMIT 5;
+SELECT metadata->>'date', metadata->>'machine', metadata->>'branch', type, description
+FROM memory
+WHERE metadata->>'owner' = :'owner' AND metadata->>'repo' = :'repo'
+ORDER BY metadata->>'date' DESC;
 ```
 
-**At the END of every session** (before the git commit), insert the session record, prompts, and summary into the database following Section 4 of `lab-automation/llm-memory.md`. Then update `result_commit` after pushing.
+Session activity (`activity` per day, `worklog` per session with exact start/end timestamps) is recorded automatically by the `llm-skill-ltm` SessionStart hook — no manual inserts.
 
 > **Agent rule:** Only execute the reconcile-CLAUDE.md and git commit/push steps when the user explicitly inserts the command. Do not run these automatically.

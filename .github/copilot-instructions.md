@@ -24,18 +24,17 @@ Use this mapping to know the current vs. former names—so you can correctly int
 - Before generating or modifying code or configuration files for apps and agents for Microsoft 365 or Microsoft 365 Copilot, invoke **get_code_snippets** tool if available.
 - Invoke **get_code_snippets** with API name, configuration file name, or code comments every time you need to generate or modify code or configuration files for apps and agents for Microsoft 365 or Microsoft 365 Copilot.
 
-## Long-Term Memory (MySQL)
+## Long-Term Memory (PostgreSQL)
 
-A `mysql-memory` MCP server is configured and connects directly to `llm_memory` on the BMW Lab VM at `140.118.122.119:3306`.
+The lab long-term memory is a **per-user PostgreSQL** store on the BMW Lab box, reached over an SSH tunnel and managed by the [`llm-skill-ltm`](https://github.com/bmw-ece-ntust/llm-skill-ltm) repo (replaces the old MySQL setup). No raw prompts/responses are stored — only distilled knowledge plus `activity`/`worklog` rows attributed by GitHub account, with `owner` (the account, org or personal) and `repo` (name only) kept as separate `metadata` fields.
 
-**At the START of every session**, load recent context:
+**At the START of every session**, recall recent work for the current project with the `memory` skill (recall-by-repo):
 
 ```sql
-SELECT s.github_username, s.repo, s.start_at, s.end_at, s.commit_title, ss.summary
-FROM sessions s
-JOIN session_summaries ss ON ss.session_id = s.id
-ORDER BY s.start_at DESC
-LIMIT 5;
+SELECT metadata->>'date', metadata->>'machine', metadata->>'branch', type, description
+FROM memory
+WHERE metadata->>'owner' = :'owner' AND metadata->>'repo' = :'repo'
+ORDER BY metadata->>'date' DESC;
 ```
 
-**At the END of every session** (before the git commit), insert the session record, prompts, and summary into the database following Section 4 of `lab-automation/llm-memory.md`. Then update `result_commit` after pushing.
+Session activity is recorded automatically by the `llm-skill-ltm` SessionStart hook — no manual inserts. Setup and usage: `lab-automation/llm-memory.md`.
