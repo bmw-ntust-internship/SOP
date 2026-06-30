@@ -80,6 +80,7 @@ Desired GitHub Markdown Format:
 \```
 ## yyyy/mm/dd-hh.mm
 
+- *Reviewed by*: <GitHub username>   <!-- fill in to certify you verified these LLM-generated minutes -->
 - *Recording*: <recording link>
 - *Attendees*:
 - *Topic*:

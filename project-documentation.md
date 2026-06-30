@@ -11,6 +11,13 @@
 > **Confidentiality:** Keep this document `private` by default.
 > Publish only after paper acceptance.  Request repo access from the GitHub admin.
 
+> [!IMPORTANT]
+> **Human verification of LLM-written documentation.** When any documentation here is
+> drafted by an LLM, add a `**Reviewed by**: <GitHub username>` line near the top (under the
+> title) to certify that you read it and confirm it is accurate. Documentation still showing
+> the `<GitHub username>` placeholder is an unreviewed draft. This mirrors the daily-log and
+> meeting-minutes rule — see the SOP [daily-log.md](./daily-log.md).
+
 > [!NOTE]
 > **Document roles:**
 > - `CONTEXT.md` — Full PRD: architecture, MSC, flowcharts, class diagram, system parameters.  Read every LLM session.
