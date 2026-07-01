@@ -61,3 +61,32 @@ Append-only. Do not edit past entries. Add one `## yyyy-mm-dd` block per session
 ### Gotchas
 
 - `.claude/settings.local.json`, `.claude/model-policy.state.json`, and `graphify-out/` are now gitignored; `.claude/settings.json` (the per-repo model/effort pin) is tracked and committed.
+
+---
+
+## 2026-06-30
+
+### Decisions
+
+- Reconciled `AGENTS.md` from the `sync-to-all-repos.sh` stub into a real tool-neutral base for this docs repo: behavior (no auto-commit, concise), writing conventions (GFM callouts, numbered headings, fully-numeric checklist IDs, "Section" spelled out, no section-sign, integration-guide command/output blocks), the four-file memory system, git workflow (author + co-author trailer, stage-by-name, multi-day per-day `work duration`), and the daily-log/LTM contract.
+- Refined `daily-log.md` format to **one task block per `[owner/repo]`**: the 7-digit short-hash commit link is the block's evidence, with activities grouped by hours under it; parallel repos are separate blocks with overlapping ranges allowed; an unknown start is `??:?? - hh:mm` (never invented); a calendar meeting without minutes yet is a placeholder `[<title>](minutes 7-hash link)`. Wired graphify-first into the Auto Daily-log reconcile prompt and kept the per-day `work duration` block.
+
+### Gotchas
+
+- The `**Reviewed by**: <GitHub username>` placeholder must be left as-is by the agent; only the responsible human fills it to certify they verified LLM-written content (daily-log, minutes, docs).
+
+---
+
+## 2026-07-01
+
+### Decisions
+
+- Refined `daily-log.md`: added the **Evidence links** tiered policy (commit tree for a summary, line-range permalink for a single-file edit, doc section header otherwise; always the 7-digit hash); split **Auto Daily-log** into **Step 1 — Commit** (reconcile + commit + push) and **Step 2 — Post to `progress-plan#366`**, since the fenced prompt is the commit workflow, not the GitHub post; added per-task durations + grouped long-span form + a **Determining durations** method; merged the review callouts into one rule (🤖 AI-generated marker + empty `Reviewed by`, filled by the human on verify).
+- Extended `integration-guide.md`: generate installation docs from the captured terminal log (`termlog`) — required critical-path steps only, debugging to the bottom.
+- Refined the live GitHub daily-log (`progress-plan#366`) for 19 days since the first LTM: new structure, real durations (termlog ∪ STM ∪ clamped worklog), tiered evidence links, AI-generated marker + empty `Reviewed by`.
+
+### Gotchas
+
+- The lab LTM connector migrated Bitwarden→Vault; this machine has no Vault, so a **dual-backend** `pg-memory-conn.sh` (Vault preferred, Bitwarden fallback) was restored locally in `llm-skill-ltm`. Bitwarden's field cache goes stale, so `ltm_bw_session` now runs `bw sync`.
+- GitHub issue comments can't carry a separate author; AI attribution on the daily-log uses a body marker + `Co-authored-by: Claude` trailer, not a real committer.
+- 6 daily-log bullets remain `??:??` (older days predating termlog, with open worklog sessions) — backfill from other machines later.

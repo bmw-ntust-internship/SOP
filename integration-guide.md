@@ -80,6 +80,15 @@ echo "Hello, World!"
 >
 > For the complete log, you can store in a folder `./logs`, and provide a link to the log file in the document.
 
+### Generating from the captured terminal log
+
+Terminal activity is captured automatically by the lab terminal-logging system (`termlog` schema, managed by `bmw-ece-ntust/llm-skill-logging`; see [daily-log.md](./daily-log.md) and [lab-automation/llm-memory.md](./lab-automation/llm-memory.md)). Generate the guide **from that stored data** rather than from memory — run the `/integration-guide` skill, which pulls the session's commands (ordered on the shared UTC timestamp) and renders each in a `shell` block with its output as `#`-commented lines per the rules above.
+
+Two rules keep the guide readable:
+
+1. **Only the required steps.** Document the shortest successful path to the target — the commands that actually worked and are on the critical path. Drop exploratory, repeated, and dead-end commands from the main flow; a successor should be able to run the steps top-to-bottom and reach a working state.
+2. **Debugging goes to the bottom.** The failed attempts, wrong turns, and their fixes are valuable but must not clutter the main steps. Collect them in a **Debugging** section at the bottom of the document (use the existing [Known Issues](#known-issues) / [Troubleshooting](#troubleshooting) sections), each as *symptom → cause → fix*.
+
 ## Project description
 
 **Project Name:** [Replace with actual project name]
