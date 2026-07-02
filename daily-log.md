@@ -146,7 +146,7 @@ Example (per-task durations, a grouped long span, one collapsed bulk activity, a
 
 **Key Principles**:
 
-- One project = one markdown file ([integration/user guide](./integration-guide.md) OR [project documentation](./project-documentation.md)); one hourly task = one section header (`##`) in that file.
+- One project = one markdown file ([implementation/user guide](./implementation-guide.md) OR [project documentation](./project-documentation.md)); one hourly task = one section header (`##`) in that file.
 - The LTM holds the detail; the daily-log holds the summary — distil, don't transcribe.
 - Log each task right after finishing it, and set the day's short-term goal for the project you'll work on.
 

@@ -90,3 +90,38 @@ Append-only. Do not edit past entries. Add one `## yyyy-mm-dd` block per session
 - The lab LTM connector migrated Bitwarden→Vault; this machine has no Vault, so a **dual-backend** `pg-memory-conn.sh` (Vault preferred, Bitwarden fallback) was restored locally in `llm-skill-ltm`. Bitwarden's field cache goes stale, so `ltm_bw_session` now runs `bw sync`.
 - GitHub issue comments can't carry a separate author; AI attribution on the daily-log uses a body marker + `Co-authored-by: Claude` trailer, not a real committer.
 - 6 daily-log bullets remain `??:??` (older days predating termlog, with open worklog sessions) — backfill from other machines later.
+
+---
+
+## 2026-07-02
+
+### Decisions
+
+- **Guard rule — never push without GitHub-admin review.** Since the SOP governs lab operation, an unreviewed change can disrupt every member. Added the rule to `AGENTS.md` (Git Workflow, first bullet) and `CLAUDE.md` (a `> [!CAUTION]` at the top of Git Commit Convention): agents may stage/commit locally on request but must stop before pushing/merging to `master` and hand off to a repo admin (Ian or Bimo). This explicitly overrides the "`git push` = intent to push" behavior for this repo.
+- Reverted `project-documentation.md` to the `d117b96` version (README-oriented template, ~1123 lines), undoing the later CONTEXT.md-oriented rewrite.
+
+### Patterns Established
+
+- Guard rules for shared/operational repos live in the tool-neutral `AGENTS.md` base and are mirrored into each tool adapter (`CLAUDE.md`); adapters defer to `AGENTS.md`.
+
+### Gotchas
+
+- Files changed since `d117b96` besides the daily-log rewrite: `.claude/settings.json`, `.github/copilot-instructions.md`, `.gitignore`, `AGENTS.md`, `CLAUDE.md`, `CONTEXT.md`, `MEMORY.md`, `TODO.md`, `integration-guide.md`, `lab-automation/llm-memory.md` (MySQL→PostgreSQL), `logistics/meeting.md`, `source-code-guide.md`, and `project-documentation.md` (now reverted).
+
+---
+
+## 2026-07-02 (cont.)
+
+### Decisions
+
+- Renamed `integration-guide.md` → **`implementation-guide.md`** (it is the SOP guideline for an LLM to write the step-by-step *implementation* of a system in the correct order — installation + integration + verification). Updated every reference and label (README, CONTEXT, CLAUDE file list, daily-log, user-guide incl. TOC anchor). The `/integration-guide` skill name is unchanged (global skill, not the file).
+- Rewrote the guide to be essential/concise/precise and re-ordered it: a lean **How to Write This Guide** preamble (4 rules: one command+`#`output per block keeping only success/failure lines and skipping the rest with `...`; shortest successful path in the right order with debugging at the bottom; generate from the termlog; one-touch LLM-over-SSH deploy) followed by the fill-in template in build order (Project → Architecture → Execution Status → Access → Repo/Config → Installation → E2E → Verification → Known Issues → Troubleshooting → Resources). Trimmed noisy example outputs to demonstrate the `...` convention; kept the full O-RAN (O1/E2/R1/InfluxDB/Grafana) verification block. ~787 → ~600 lines.
+
+### Gotchas
+
+- The old file had a markdown bug: the `## Access Method` heading was concatenated onto the end of the "Target Users:" line — fixed into its own section during the rewrite.
+- The guard rule was satisfied for this push by the user's explicit "I accept this one" (human sign-off), not by leaving it unpushed.
+
+### Patterns Established
+
+- Guideline docs read best as **How-to-write rules first, fill-in template second**, with example command outputs trimmed via `...` so the guide practises the conciseness it preaches.

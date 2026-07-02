@@ -14,7 +14,7 @@ SOP repository for the **BMW Lab** at NTUST, supervised by Prof. Ray. Pure docum
 | --- | --- |
 | `README.md` | Main SOP — sections 1–6 define lab rules; includes "Student Progress Stages (by Year)" rubric (First-year / Second-year) |
 | `daily-log.md` | Daily tracking format + Auto Daily-Log workflow (PostgreSQL LTM + 4-file reconcile) |
-| `integration-guide.md` | Template for per-component installation + end-to-end integration in one document |
+| `implementation-guide.md` | Guideline for per-component installation + end-to-end integration in one document (renamed from `integration-guide.md`) |
 | `user-guide.md` | User guide template |
 | `project-documentation.md` | Project README template (architecture, use cases, MSC, class diagrams, flowcharts) |
 | `source-code-guide.md` | Coding standards: OOP, Adapter/Abstract Factory/Strategy, Sphinx/Doxygen, folder structure |
@@ -65,7 +65,8 @@ Defined in `daily-log.md` (Auto Daily-log). Two parts:
 
 ## Git Convention
 
-- Branch: `master` (single branch, push directly)
+- Branch: `master` (single branch)
+- **Guard rule:** never push (or merge to `master`) without review from a GitHub repo admin (Ian or Bimo) — the SOP governs lab operation. Agents commit locally on request but hand off for admin review before pushing, even when the user types `git push`. Defined in `AGENTS.md` (Git Workflow) and `CLAUDE.md` (Git Commit Convention).
 - Author: Ray-Guang Cheng `crg@mail.ntust.edu.tw`
 - Co-author: Ian Joseph Chandra `ianjoseph2204@gmail.com`
 - Commit format: Title / work duration (`yyyy/mm/dd_hh:mm - yyyy/mm/dd_hh:mm`) / Summary / Details / Co-authored-by

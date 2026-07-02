@@ -1,37 +1,34 @@
-<h1 align="center">Integration Guide - Guideline</h1>
+<h1 align="center">Implementation Guide — Guideline</h1>
 <hr>
 
 > [!CAUTION]
-> Make this document **private** by default. Only make it public after publishing the paper of this project.
->
-> Request access with the GitHub admin in our group.
+> Keep this document **private** by default. Make it public only after the project's paper is published. Request access from the group's GitHub admin.
 
 ---
-> [!NOTE]
-> **Purpose of Integration Guide vs User Guide**:
->
-> - **Integration Guide**: Covers per-component **installation** (setup, configuration, dependencies) and **end-to-end integration** (connecting components, verifying interfaces). This is the single document for getting the full system running.
-> - **User Guide**: Focuses on how to **use** the system once it is installed and running.
-> - **Project Documentation**: Defines `System Architecture` & attaches the integration guide link, `use case diagram`, `message-sequence chart (MSC)`, `class diagram`, `flowchart`.
 
-Correlation between Integration Guide, User Guide, and Project Documentation:
+> [!NOTE]
+> **Implementation Guide vs User Guide vs Project Documentation**
+>
+> - **Implementation Guide** (this file): per-component **installation** (setup, configuration, dependencies) and **end-to-end integration** (connecting components, verifying interfaces). The single document for bringing the full system up from a clean state.
+> - **User Guide**: how to **use** the system once it is running.
+> - **Project Documentation**: `System Architecture` (with a link to this guide), use-case diagram, message-sequence chart (MSC), class diagram, flowchart.
 
 ```mermaid
 graph TD
 
 PD[Project Documentation]
   subgraph "Component A"
-        IG-A[Installation Guide A]
+        IG-A[Implementation Guide A]
         UG-A[User Guide A]
     end
 
     subgraph "Component B"
-        IG-B[Installation Guide B]
+        IG-B[Implementation Guide B]
         UG-B[User Guide B]
     end
 
     subgraph "Component C"
-        IG-C[Installation Guide C]
+        IG-C[Implementation Guide C]
         UG-C[User Guide C]
     end
 
@@ -43,13 +40,18 @@ IG-C --> PD
 ## Table of Contents
 
 > [!TIP]
-> Generate the Table of Contents automatically using [Markdown All in One extension in VS Code](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one#table-of-contents).
+> Generate the Table of Contents automatically with the [Markdown All in One extension for VS Code](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one#table-of-contents).
 
 - [Table of Contents](#table-of-contents)
-- [Guideline](#guideline)
-- [Project description](#project-description)
-- [Execution Status](#execution-status)
+- [How to Write This Guide](#how-to-write-this-guide)
+  - [1. One command, one block — with concise output](#1-one-command-one-block--with-concise-output)
+  - [2. Only the required steps, in the right order](#2-only-the-required-steps-in-the-right-order)
+  - [3. Generate from the captured terminal log](#3-generate-from-the-captured-terminal-log)
+  - [4. One-touch deployment (LLM over SSH)](#4-one-touch-deployment-llm-over-ssh)
+- [Project Description](#project-description)
 - [System Architecture](#system-architecture)
+- [Execution Status](#execution-status)
+- [Access Method](#access-method)
 - [Repository Structure](#repository-structure)
   - [Configuration](#configuration)
   - [Installation Steps](#installation-steps)
@@ -57,54 +59,112 @@ IG-C --> PD
 - [Post-Installation Verification](#post-installation-verification)
 - [Known Issues](#known-issues)
 - [Troubleshooting](#troubleshooting)
-  - [Common Issues and Solutions](#common-issues-and-solutions)
 - [Additional Resources](#additional-resources)
 
-## Guideline
+## How to Write This Guide
 
-When documenting installation or integration steps:
+Four rules produce a guide a successor — human or LLM — can follow top-to-bottom to a working system.
 
-1. write the command the user must run as a code block with the appropriate shell language tag.
-2. Comment out the terminal output directly within the **same** code block using `#` symbols in the beginning of each output line.
+### 1. One command, one block — with concise output
 
-Example:
+Put the command in a fenced block tagged with its shell, and comment the terminal output in the **same** block with `#`. Keep only the lines that prove the step succeeded or failed; skip the rest with `...`. Redirect long or noisy logs to a `./logs/` folder and link them.
 
 ```shell
-echo "Hello, World!"
+git clone https://github.com/<org>/<repo>.git && cd <repo>
 
-# Hello, World!
+# Cloning into '<repo>'...
+# ...
+# Resolving deltas: 100% (42/42), done.
 ```
 
-> [!CAUTION]
-> If the output of the terminal is too long, only attach the snippet of the relevant output that indicates success or failure.
->
-> For the complete log, you can store in a folder `./logs`, and provide a link to the log file in the document.
+### 2. Only the required steps, in the right order
 
-### Generating from the captured terminal log
+Document the **shortest successful path**: the commands that actually worked, on the critical path, runnable top-to-bottom from a clean state to a working system. Drop exploratory, repeated, and dead-end commands from the main flow. Put failures, wrong turns, and their fixes in [Known Issues](#known-issues) / [Troubleshooting](#troubleshooting) at the bottom, each as *symptom → cause → fix*.
 
-Terminal activity is captured automatically by the lab terminal-logging system (`termlog` schema, managed by `bmw-ece-ntust/llm-skill-logging`; see [daily-log.md](./daily-log.md) and [lab-automation/llm-memory.md](./lab-automation/llm-memory.md)). Generate the guide **from that stored data** rather than from memory — run the `/integration-guide` skill, which pulls the session's commands (ordered on the shared UTC timestamp) and renders each in a `shell` block with its output as `#`-commented lines per the rules above.
+### 3. Generate from the captured terminal log
 
-Two rules keep the guide readable:
+Terminal activity is captured automatically by the lab terminal-logging system (`termlog` schema, managed by `bmw-ece-ntust/llm-skill-logging`; see [daily-log.md](./daily-log.md) and [lab-automation/llm-memory.md](./lab-automation/llm-memory.md)). Generate the guide **from that stored data**, not from memory — run the `/integration-guide` skill, which pulls the session's commands ordered on the shared UTC timestamp and renders each as a `shell` block with `#`-commented output per the rules above.
 
-1. **Only the required steps.** Document the shortest successful path to the target — the commands that actually worked and are on the critical path. Drop exploratory, repeated, and dead-end commands from the main flow; a successor should be able to run the steps top-to-bottom and reach a working state.
-2. **Debugging goes to the bottom.** The failed attempts, wrong turns, and their fixes are valuable but must not clutter the main steps. Collect them in a **Debugging** section at the bottom of the document (use the existing [Known Issues](#known-issues) / [Troubleshooting](#troubleshooting) sections), each as *symptom → cause → fix*.
+### 4. One-touch deployment (LLM over SSH)
 
-## Project description
+> [!IMPORTANT]
+> Structure the guide so an LLM can take a clean server to a working system over SSH: the human fills in the Prerequisites, the LLM runs one idempotent script, and it pauses only for the human-only steps you flag.
+
+**Prerequisites — the human fills these in first.** List everything the LLM cannot invent. Keep secret *values* out of Git; list only their names and where they live.
+
+| Input | What it is | Example |
+| --- | --- | --- |
+| SSH access | account with `sudo`, reachable over VPN | `user@<ip>` |
+| Config values | ports, FQDN/IP, paths | `PORT=8200` |
+| Secret pointers | secret name + location (Vault path, Keychain item) — never the value | `secret/lab/<proj>/db` |
+| Certs / keys | TLS or SSH material the human provisions | `/etc/<svc>/tls/*` |
+| Human-custody items | unseal keys, root tokens, OIDC secrets stored offline | held by key holders |
+
+**One-touch script.** Provide a single idempotent script (for example `deploy/<component>-deploy.sh`) that performs the whole server-side bring-up, plus the one command that runs it:
+
+```bash
+scp -r deploy/<component>-deploy.sh config "$SSH_USER@$HOST:/tmp/dep/"
+ssh "$SSH_USER@$HOST" "sudo VAR1=... VAR2=... bash /tmp/dep/<component>-deploy.sh"
+
+# == step 1: install packages ... ==
+# ...
+# == done ==
+```
+
+- **Idempotent** — safe to re-run; each step checks state before acting (installed? enabled? configured?), so reruns converge instead of duplicating.
+- **Reads inputs from the environment**, never hardcoded; **fails closed** with a clear message naming the missing input.
+- **Human-only steps stay manual** — the script prints what the human must do (store unseal keys offline, approve access) and stops or continues safely.
+- **Verifiable output** — each stage prints a success/failure marker so the LLM can confirm before proceeding.
+- Keep a **Manual reference** (the same steps one at a time) below the one-touch path so the deployment can be audited or run by hand.
+
+Worked example: `bmw-ece-ntust/llm-skill-creds/installation-guide.md` (Prerequisites → `deploy/deploy-vault.sh` → Manual reference).
+
+## Project Description
 
 **Project Name:** [Replace with actual project name]
 
-**Description:** A comprehensive solution for [specific use case]. This project provides [key functionality] and enables users to [main benefits].
+**Description:** A solution for [specific use case] that provides [key functionality] and enables users to [main benefit].
 
-**Key Features:**:
+**Key Features:**
 
 - Feature 1: [Brief description]
 - Feature 2: [Brief description]
 - Feature 3: [Brief description]
 
-**Target Users:** [Developers/Researchers/System Administrators/etc.]## Access Method (if any)
+**Target Users:** [Developers / Researchers / System Administrators / etc.]
+
+## System Architecture
 
 > [!NOTE]
-> Our servers are put in the server room. Please contact the admin for VPN access.
+> **draw.io files:** store raw `.drawio` files in `./docs/drawio/`, export PNG/SVG for embedding, version the raw files, and name them `<project-name>.drawio`.
+
+Include in the architecture diagram:
+
+1. **IP addresses** — per module/component
+2. **Connection types & protocols** — WiFi, RJ-45, HTTP, TCP, UDP, WebSocket, etc.
+3. **Sub-module structure** — internal components and their relationships
+4. **Data-flow direction** — request/response patterns
+5. **Port numbers** — communication ports
+6. **Network boundaries** — segments (DMZ, internal, external)
+
+## Execution Status
+
+> [!NOTE]
+> **Status icons:** ✅ done · ⏳ in progress / pending · ❌ error (with explanation)
+
+| Step | Status | Timeline | Notes |
+| --- | --- | --- | --- |
+| [Install Component A](#installation-steps) | ✅ | 2024-10-15 | All services running |
+| [Install Component B](#installation-steps) | ✅ | 2024-10-16 | Dependencies resolved |
+| [Configure components](#configuration) | ✅ | 2024-10-17 | Environment variables set |
+| [Integrate A ↔ B](#end-to-end-walkthrough) | ✅ | 2024-10-19 | Communication verified |
+| [Post-installation verification](#post-installation-verification) | ✅ | 2024-10-20 | All checks passed |
+| [Performance tuning](#troubleshooting) | ⏳ | 2024-10-21 | Tuning parameters |
+
+## Access Method
+
+> [!NOTE]
+> Servers live in the server room. Contact the admin for VPN access.
 
 ```shell
 Host: <IP address>
@@ -114,116 +174,58 @@ User: <username>
 ```shell
 ssh user@<IP address>
 
-# The authenticity of host '192.168.1.100 (192.168.1.100)' can't be established.
-# ECDSA key fingerprint is SHA256:xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
+# The authenticity of host '192.168.1.100' can't be established.
 # Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-# Warning: Permanently added '192.168.1.100' (ECDSA) to the list of known hosts.
-# user@192.168.1.100's password: 
+# ...
 # Welcome to Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-87-generic x86_64)
-# Last login: Mon Oct 21 10:30:15 2024 from 192.168.1.50
 # user@hostname:~$
 ```
-
->[!NOTE]
-> 
-
-## Execution Status
-
-> [!NOTE]
-> **Status Icons:**
->
-> - ✅ Completed successfully
-> - ⏳ In progress / Pending
-> - ❌ Error / Failed (with explanation)
-
-| Step                                                                  | Status | Timeline    | Execution Status / Notes                                     |
-| --------------------------------------------------------------------- | ------ | ----------- | ------------------------------------------------------------ |
-| [Install Component A](#component-a-installation)                      | ✅     | 2024-10-15  | All services running                                         |
-| [Install Component B](#component-b-installation)                      | ✅     | 2024-10-16  | Dependencies resolved successfully                           |
-| [Configure Component A](#component-a-configuration)                   | ✅     | 2024-10-17  | Environment variables set                                    |
-| [Configure Component B](#component-b-configuration)                   | ✅     | 2024-10-18  | Configuration files updated                                  |
-| [Integrate Component A with Component B](#integration-testing)        | ✅     | 2024-10-19  | Communication verified                                       |
-| [Run Post-Installation Tests](#post-installation-verification)        | ✅     | 2024-10-20  | All tests passed                                             |
-| [Performance Optimization](#performance-tuning)                        | ⏳      | 2024-10-21  | In progress: tuning parameters                               |
-| [Documentation and Reporting](#documentation)                          |        | 2024-10-22  |                                                              |
-
-## System Architecture
-
-> [!NOTE]
-> **Draw.io Files Management:**
->
-> If you create system architecture diagrams using draw.io:
->
-> - Store the raw `.drawio` files in the `./docs/drawio` folder of your repository
-> - Export diagrams as PNG/SVG and embed them in the documentation
-> - Keep `draw.io` files versioned for easy updates and maintenance
-> - Use consistent naming: `<project-name>.drawio`
-
-**Important Components to Include in System Architecture:**
-
-1. **IP Addresses** - Specify IP address for each module/component
-2. **Connection Types** - Clear indication of connection types (WiFi, RJ-45, etc. ) & protocols (HTTP, TCP, UDP, WebSocket, etc.)
-3. **Sub-module Structure** - Show internal components and their relationships
-4. **Data Flow Direction** - Indicate request/response patterns
-5. **Port Numbers** - Specify communication ports.
-6. **Network Boundaries** - Show different network segments (DMZ, internal, external)
-
-
 
 ## Repository Structure
 
 ```markdown
 project-name/
-├── src/                    # Source code
+├── src/                   # Source code
 │   ├── main.py            # Main application entry point
 │   └── modules/           # Application modules
 ├── config/                # Configuration files
 │   ├── .env.example       # Environment variables template
 │   └── settings.json      # Application settings
+├── deploy/                # One-touch deployment script(s)
 ├── docs/                  # Documentation
 ├── tests/                 # Test files
-├── requirements.txt       # Python dependencies
-├── README.md             # Project overview
-└── LICENSE               # License information
+├── requirements.txt       # Dependencies
+└── README.md              # Project overview
 ```
 
 ### Configuration
 
-**Environment Variables:**
-Create a `.env` file in the root directory with the following variables:
+Create a `.env` file in the root directory (see `config/.env.example` for all variables):
 
 ```bash
-# Database Configuration
+# Database
 DB_HOST=localhost
 DB_PORT=5432
 DB_NAME=your_database_name
 DB_USER=your_username
 DB_PASSWORD=your_password
 
-# Application Settings
+# Application
 APP_PORT=3000
 APP_DEBUG=false
 ```
 
-**Configuration Files:**
-- `config/settings.json`: Contains application-specific settings
-- Refer to `config/.env.example` for all available environment variables
-
 ### Installation Steps
-Installation is the next section in an effective README. Tell other users how to install your project locally. Optionally, include a gif to make the process even more clear for other people.
+
+Run these from a clean checkout, top-to-bottom, to reach a running system.
 
 1. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/your-username/your-repo.git
-    cd your-repo
-    
-    # Cloning into 'your-repo'...
-    # remote: Enumerating objects: 156, done.
-    # remote: Counting objects: 100% (156/156), done.
-    # remote: Compressing objects: 100% (98/98), done.
-    # remote: Total 156 (delta 42), reused 156 (delta 42), pack-reused 0
-    # Receiving objects: 100% (156/156), 45.23 KiB | 2.26 MiB/s, done.
+    git clone https://github.com/<org>/<repo>.git && cd <repo>
+
+    # Cloning into '<repo>'...
+    # ...
     # Resolving deltas: 100% (42/42), done.
     ```
 
@@ -231,49 +233,43 @@ Installation is the next section in an effective README. Tell other users how to
 
     ```sh
     pip install -r requirements.txt
-    
+
     # Collecting package-name==1.2.3
-    #   Downloading package-name-1.2.3-py3-none-any.whl (123 kB)
-    #      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 123.4/123.4 kB 3.2 MB/s eta 0:00:00
-    # Installing collected packages: package-name, dependency-1, dependency-2
+    # ...
     # Successfully installed package-name-1.2.3 dependency-1-2.0.1 dependency-2-3.1.0
     ```
 
-3. **Set up environment variables:**
-
-    Create a `.env` file in the root directory and add the necessary environment variables. Refer to `.env.example` for guidance.
+3. **Set up environment variables:** create `.env` in the root directory (see [Configuration](#configuration)).
 
 4. **Run the application:**
 
     ```sh
     python3 app.py
-    
+
     # * Serving Flask app 'app'
-    # * Debug mode: off
-    # WARNING: This is a development server. Do not use it in a production deployment.
+    # ...
     # * Running on http://127.0.0.1:3000
-    # Press CTRL+C to quit
     ```
 
 ## End-to-End Walkthrough
 
 > [!IMPORTANT]
-> Every integration guide must include a single end-to-end walkthrough section that chains all components in the correct startup order. A successor must be able to follow this section alone to bring the full system from a clean state to a working state.
+> Every guide must include one end-to-end walkthrough that chains all components in the correct startup order. A successor must be able to follow this section alone to bring the full system from a clean state to a working state.
 
-**Required structure:**
+Required structure:
 
-1. **Component startup order** — list which service must be running before the next one starts
-2. **Each step**: command(s) to run + expected output confirming the component is ready
-3. **Inter-component verification** — confirm each interface is working before proceeding (e.g., verify SCTP link is up before testing E2)
-4. **Estimated time** — note how long each step typically takes (helps successors plan)
-5. **Single E2E test** — one command or API call that exercises the full chain end-to-end
+1. **Startup order** — which service must be running before the next one starts
+2. **Each step** — command(s) + expected output confirming the component is ready
+3. **Inter-component verification** — confirm each interface before proceeding (e.g. SCTP link up before testing E2)
+4. **Estimated time** — per step, so successors can plan
+5. **Single E2E test** — one command or API call that exercises the full chain
 
 **Example template:**
 
 ```markdown
 ## End-to-End Walkthrough
 
-Starting from a clean deployment, bring up the full system in this order.
+Starting from a clean deployment, bring up the system in this order.
 Total estimated time: ~45 minutes.
 
 ### 1. Start Component A (5 min)
@@ -284,7 +280,7 @@ cd src/component-a && python3 app.py --config config/.env
 
 ### 2. Start Component B — depends on A (10 min)
 ```bash
-curl http://localhost:8080/health  # verify A is up first
+curl http://localhost:8080/health   # verify A is up first
 cd src/component-b && ./start.sh
 # [INFO] Connected to Component A at localhost:8080
 # [INFO] Component B ready
@@ -299,9 +295,7 @@ curl -X POST http://localhost:8090/api/run-test \
 ```
 ```
 
----
-
-##  Post-Installation Verification
+## Post-Installation Verification
 
 Follow these steps to verify your installation was successful:
 
@@ -310,9 +304,8 @@ Follow these steps to verify your installation was successful:
    ```bash
    # Check if the application is running
    ps aux | grep app.py
-   
+
    # user     12345  0.5  2.1 345678 123456 ?      Ssl  10:30   0:15 python3 app.py
-   # user     12346  0.0  0.0  12345   1234 pts/0  S+   10:45   0:00 grep --color=auto app.py
    ```
 
 2. **Test Basic Functionality:**
@@ -320,11 +313,9 @@ Follow these steps to verify your installation was successful:
    ```bash
    # Test API endpoint (if applicable)
    curl http://localhost:3000/health
-   
+
    # HTTP/1.1 200 OK
-   # Content-Type: application/json
-   # Content-Length: 78
-   # 
+   # ...
    # {"status": "OK", "timestamp": "2024-10-21T10:45:23.456Z", "uptime": 900}
    ```
 
@@ -333,13 +324,10 @@ Follow these steps to verify your installation was successful:
    ```bash
    # Run database connectivity test
    python3 -c "from src.main import test_db_connection; test_db_connection()"
-   
+
    # Connecting to database at localhost:5432...
    # Database connection successful!
-   # Database: your_database_name
    # Server version: PostgreSQL 14.9
-   # Connection latency: 12ms
-   # Test query executed successfully
    ```
 
 4. **Verify O1 Interface (NETCONF/YANG + VES):**
@@ -598,32 +586,24 @@ Follow these steps to verify your installation was successful:
    ```
 
    > [!TIP]
-   > To visually confirm: open the Grafana dashboard in a browser at `http://<Grafana-IP>:3000`, navigate to the O-RAN PM dashboard, and verify that graphs for KPIs such as PRB utilization, throughput, and cell availability show live or recent data points.
+   > To visually confirm: open the Grafana dashboard at `http://<Grafana-IP>:3000`, navigate to the O-RAN PM dashboard, and verify that graphs for KPIs such as PRB utilization, throughput, and cell availability show live or recent data points.
 
 ## Known Issues
 
 > [!IMPORTANT]
-> This section is **required** in every integration guide. Document every known failure mode, expired credential, hardware quirk, or unresolved integration issue. A successor who hits an undocumented failure will waste days debugging what took you hours to figure out the first time.
-
-Use the following table format:
+> This section is **required**. Document every known failure mode, expired credential, hardware quirk, or unresolved integration issue. A successor who hits an undocumented failure will waste days debugging what took you hours the first time.
 
 | Issue | Severity | Status | Workaround / Steps to Resolve |
 |-------|----------|--------|-------------------------------|
 | [Short description of the failure] | ❌ BLOCK / ⚠️ WARN / ℹ️ INFO | Open / Resolved / Workaround | Step-by-step to unblock |
 
 **Severity guide:**
+
 - `❌ BLOCK` — prevents the system from running; must be fixed or documented as "build from source" before handover
 - `⚠️ WARN` — system runs but a component is degraded; must have a documented workaround
 - `ℹ️ INFO` — cosmetic or edge-case issue; note for awareness
 
-**What to document here:**
-- Container image pull failures (expired tokens, private registry access)
-- Git submodule empty after plain clone (add `git submodule update --init` step)
-- API endpoints or config parameters that changed from the thesis diagrams
-- Hardware-specific timing or driver quirks
-- Integration failures that are known to be flaky (with retry instructions)
-- Experimental configurations that always fail (mark as out of scope)
-- Data anomalies in datasets (sensor glitches, FAILED configs)
+**What to document:** container image pull failures (expired tokens, private registry access); empty git submodules after a plain clone; API endpoints or config parameters that changed from the thesis diagrams; hardware-specific timing/driver quirks; known-flaky integrations (with retry instructions); experimental configs that always fail (mark out of scope); dataset anomalies.
 
 **Example:**
 
@@ -636,95 +616,36 @@ Use the following table format:
 
 ## Troubleshooting
 
-### Common Issues and Solutions
-
-1. **Issue: Port already in use**
-
-   ```error
-   Address already in use: 3000
-   ```
-
-   **Solution:**
+1. **Port already in use** (`Address already in use: 3000`)
 
    ```bash
-   # Find process using the port
-   sudo lsof -i :3000
-   
-   # COMMAND   PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
-   # python3 12345  user    3u  IPv4 123456      0t0  TCP *:3000 (LISTEN)
-   
-   # Kill the process (replace PID with actual process ID)
-   kill -9 12345
-   
-   # Process 12345 terminated
+   sudo lsof -i :3000          # find the process
+   # python3 12345  user  3u  IPv4 ...  TCP *:3000 (LISTEN)
+   kill -9 12345               # free the port
    ```
 
-2. **Issue: Python dependencies not found**
-
-   **Error Message:** `ModuleNotFoundError: No module named 'module_name'`
-
-   **Solution:**
+2. **Python dependency not found** (`ModuleNotFoundError: No module named 'module_name'`)
 
    ```bash
-   # Reinstall dependencies
    pip install -r requirements.txt
-   
-   # Requirement already satisfied: package-name==1.2.3 in ./venv/lib/python3.10/site-packages
-   # Collecting module_name
-   #   Downloading module_name-2.1.0-py3-none-any.whl (456 kB)
-   # Installing collected packages: module_name
-   # Successfully installed module_name-2.1.0
-   
-   # Or install specific package
-   pip install module_name
-   
-   # Collecting module_name
-   #   Downloading module_name-2.1.0-py3-none-any.whl (456 kB)
-   # Installing collected packages: module_name
+   # ...
    # Successfully installed module_name-2.1.0
    ```
 
-3. **Issue: Permission denied errors**
-
-   **Error Message:** `Permission denied: '/path/to/file'`
-
-   **Solution:**
+3. **Permission denied** (`Permission denied: '/path/to/file'`)
 
    ```bash
-   # Fix file permissions
-   chmod 755 /path/to/file
-   
-   # (No output on success)
-   
-   # Or run with appropriate user permissions
-   sudo python3 app.py
-   
-   # [sudo] password for user: 
-   # * Serving Flask app 'app'
-   # * Debug mode: off
-   # * Running on http://127.0.0.1:3000
-   # Press CTRL+C to quit
+   chmod 755 /path/to/file     # fix permissions (no output on success)
+   # or run with the appropriate user/privileges
    ```
 
 ## Additional Resources
 
-**Documentation:**:
-
-- [Official Project Documentation](https://your-project-docs.com)
-- [API Reference Guide](https://your-project-api.com)
-- [Configuration Reference](https://your-project-config.com)
-
-**Community Support:**
-- [GitHub Issues](https://github.com/your-username/your-repo/issues)
-- [Stack Overflow Tag](https://stackoverflow.com/questions/tagged/your-project)
-- [Discord Community](https://discord.gg/your-project)
-
-**Contact:**
+- **Documentation:** [Official docs](https://your-project-docs.com) · [API reference](https://your-project-api.com) · [Configuration reference](https://your-project-config.com)
+- **Support:** [GitHub Issues](https://github.com/<org>/<repo>/issues)
 - **Maintainer:** Your Name (your.email@example.com)
-- **Support Team:** support@your-project.com
-- **Emergency Contact:** +1-xxx-xxx-xxxx (for critical issues only)
 
 ---
 
 > [!NOTE]
-> This installation guide is regularly updated. For the latest version, check the [GitHub repository](https://github.com/your-username/your-repo).
+> This guide is updated regularly. For the latest version, check the [GitHub repository](https://github.com/<org>/<repo>).

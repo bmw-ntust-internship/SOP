@@ -5,6 +5,7 @@
 - [ ] Fill in Section 5.3 Handover Candidates table in README.md (actual student names and project topics)
 - [ ] Fix broken Recognition Form link in README.md Section 5.1.0 (`[link}` placeholder)
 - [ ] Add `progress-plan` tool usage instructions to `daily-log.md §Generating the Daily-Log Entry`
+- [ ] Mirror the "never push without GitHub-admin review" guard rule into `.github/copilot-instructions.md` so the Copilot adapter also defers to it
 
 ## Next
 

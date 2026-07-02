@@ -32,7 +32,7 @@ SOP/
 ├── .gitignore                 # Git ignore rules (.DS_Store, .claude/settings.local.json, graphify-out/)
 ├── .vscode/
 │   └── mcp.json                 # VS Code MCP server config (Microsoft 365 Agents Toolkit MCP)
-├── integration-guide.md       # Guideline for writing integration guides (covers installation, end-to-end integration, and post-installation verification for O-RAN interfaces)
+├── implementation-guide.md    # Guideline for writing implementation guides (covers installation, end-to-end integration, and post-installation verification for O-RAN interfaces)
 ├── user-guide.md              # Guideline for writing user guides for projects
 ├── paper-writing.md           # Steps and tips for writing and revising IEEE papers
 ├── project-documentation.md   # Guidelines for project documentation (architecture, diagrams)
@@ -98,6 +98,9 @@ SOP/
 ---
 
 ## Git Commit Convention
+
+> [!CAUTION]
+> **Guard rule — never push without GitHub-admin review.** This repo is the lab's Standard Operating Procedure; its contents govern lab operation, so an unreviewed change can disrupt every member. Do **not** `git push` (or merge a PR to `master`) until a GitHub repository admin (**Ian Joseph Chandra** or **Bimo**) has reviewed and approved the change. You may stage and commit locally when the user asks, but stop before pushing and hand off for admin review. This overrides the "`git push` = explicit intent to push" behavior for this repo: even when the user types `git push`, prepare the commit and request admin review instead of pushing to the shared remote.
 
 ### Commit authorship
 

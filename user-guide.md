@@ -1,9 +1,9 @@
 # User Guide Template
 
 > [!NOTE]
-> **Purpose of User Guide vs Integration Guide:**
+> **Purpose of User Guide vs Implementation Guide:**
 >
-> - **Integration Guide**: Covers per-component installation and end-to-end system integration
+> - **Implementation Guide**: Covers per-component installation and end-to-end system integration
 > - **User Guide**: Focuses on how to **use** the system once it's installed and running
 > - **System Architecture & MSC**: Only include simplified versions if they help users understand workflows
 
@@ -24,7 +24,7 @@
     - [5. API Usage (if applicable)](#5-api-usage-if-applicable)
     - [Common API Calls](#common-api-calls)
     - [7. Best Practices and Tips](#7-best-practices-and-tips)
-  - [Key Differences: User Guide vs Integration Guide](#key-differences-user-guide-vs-integration-guide)
+  - [Key Differences: User Guide vs Implementation Guide](#key-differences-user-guide-vs-implementation-guide)
 
 ---
 
@@ -261,9 +261,9 @@ A: Email support@yourapp.com or use the in-app help chat
 
 ---
 
-## Key Differences: User Guide vs Integration Guide
+## Key Differences: User Guide vs Implementation Guide
 
-| Aspect | Integration Guide | User Guide |
+| Aspect | Implementation Guide | User Guide |
 |--------|-------------------|------------|
 | **Focus** | System setup, configuration & integration | Feature usage & workflows |
 | **Audience** | System administrators, DevOps | End users, operators |
