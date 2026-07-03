@@ -34,27 +34,9 @@ This document describes how students track daily progress and ensure systematic 
 ## Create Daily-log Card
 
 1. Get access to our GitHub Projects ([lab-members](https://github.com/orgs/bmw-ece-ntust/projects/8) / [interns](https://github.com/orgs/bmw-ntust-internship/projects/4)) (contact our GitHub admin).
-2. Create your card based on the daily-log card template.
-3. Write the information below as the **GitHub Project card description** in the first comment of the card. The card description serves as the student's permanent profile and milestone reference on the project board.
-
-   **Example:**
-
-    ```markdown
-    **Profile Information**
-    - Name: <Full Name>
-    - Student ID: <Student ID>
-    - Email: <ntust.edu.tw email>
-    - Supervisor: Prof. Ray
-
-    **Projects**
-    1. Thesis: [<Thesis Title>](<GitHub repo link>)
-    2. Industrial Project: [<Project Name>](<GitHub repo link>)
-    3. Logistic Jobs: <e.g., Meeting administrator>
-
-    **Milestones**
-    - [ ] [<Milestone 1 Title>](<GitHub link>)
-    - [ ] [<Milestone 2 Title>](<GitHub link>)
-    ```
+2. Create your card from the [student card template](./templates/student-card.md).
+3. **First bubble** (the card description) — the student card, kept **edited in place** as your permanent profile, plan, and checklist status. Its structure (profile, important hyperlinks, then one deadline-carrying `##` section per checklist with an [evidence link](#evidence-links) per finished item) is defined in the template itself; the Oral Exam and Handover sections reuse the [leaving-procedure.md](./leaving-procedure.md) item numbering — the SOP defines the items, the card tracks their status.
+4. **Every following comment bubble** is one daily-log post per day, in the [Formatting Standards](#formatting-standards) below.
 
 ## Writing Daily-log
 
@@ -84,6 +66,7 @@ This document describes how students track daily progress and ensure systematic 
 
 Every time entry is a **duration** `hh:mm - hh:mm` (start *and* end), never a single timestamp. A simple interval nests its tasks with their own durations; a long span (1–5 h) that covers 2–3 recurring jobs uses the grouped form above — an outer labelled bullet, then `*project / skill*`, then per-task duration bullets.
 
+- **Goals are measurable deliverables.** Each Short-term Goal names an observable output — a figure, a passing test, a merged PR, a doc section — never a vague activity ("study X", "try Y"). An unfinished goal stays `- [ ]` with a one-line reason suffix — ` — pending: <reason>` or ` — blocked: <reason / support needed>` — so the next day's plan starts from it.
 - **Summarize by the hour, not by commit.** Each bullet is one interval `hh:mm - hh:mm` of work on one project: a one-line summary linked to the study-notes documentation it produced. Nest its tasks as sub-bullets, **each with its own `hh:mm - hh:mm` duration** and a documentation-section link. The repo is carried by the link, not written after the hours.
 - **Link the evidence at the right granularity** so a reviewer can verify the exact claim — commit tree for a summary, exact line range for a single-file edit, doc section header otherwise. Always pin the 7-digit commit hash. See [Evidence links](#evidence-links).
 - **Collapse bulk activity.** Many near-identical commits (e.g. a preference propagated across N repos) become one bullet, e.g. `Propagated shared AI-agent preferences across N repos`, with one representative link.
@@ -99,7 +82,8 @@ Derive both ends of every interval and task from what the lab already captures �
 - **Session bounds** — from the LTM `worklog` row (exact `start`/`end` per session, recall-by-repo). These bound the outer interval / grouped span.
 - **Per-task bounds** — from the **terminal log** (`termlog.command`: one row per command, each with a UTC `ts`). A task is the contiguous run of commands in the same `cwd`/`tags` toward one documentation section; its duration is `min(ts) → max(ts)` of that run. A task ends where the `cwd`/target switches — the next task's start.
 - **Long grouped span (2–3 jobs over 1–5 h)** — the outer bullet's range is the earliest child start → latest child end; nest `*project / skill*`, then each task with its own `min(ts) → max(ts)` duration.
-- **Cross-check the narrative** with LTM `activity`/`memory` rows (joined to termlog on the shared UTC timestamp). If a task has a single command, bound its end by the next task's start (or the session end); only if a bound is genuinely underivable, write `??:?? - hh:mm` and flag for review.
+- **Cross-check the narrative** with LTM `activity`/`memory` rows (joined to termlog on the shared UTC timestamp). If a task has a single command, bound its end by the next task's start (or the session end).
+- **Unknown day end — use the latest LTM timestamp, not `??:??`.** If a day's end is not on a `worklog` row (for example work done in a session whose bounds did not flush), take the **latest recorded LTM timestamp for that day and repo** — `max((metadata->>'end')::timestamptz)`, else `max(updated_at)` of that day's rows — as the day's end. Only write `??:?? - hh:mm` and flag for review if the LTM holds nothing at all for that day.
 
 ### Evidence links
 
@@ -112,7 +96,7 @@ Every bullet links to evidence a reviewer can open and check. **Match the link g
 Hard rules: links must resolve to **real content** (never a fabricated `#anchor` or `#L` range); never a bare `/commit/<hash>` for a specific task; every claimed task carries one of these three.
 
 > [!IMPORTANT]
-> **AI-generated until a human verifies.** An LLM-written entry ends with an *🤖 AI-generated* marker and leaves `**Reviewed by**:` **empty** — it is a draft. The member reads it, then writes their GitHub username on that line to certify the activity, times, and links are accurate. The entry is committed under the AI's identity so machine drafts stay distinguishable from verified ones — this AI attribution is for the daily-log only (repo/code commits strip the LLM; the member is sole author — see [Git Commit Convention](./CLAUDE.md)). Same rule for LLM-written meeting minutes and documentation ([logistics/meeting.md](./logistics/meeting.md), [project-documentation.md](./project-documentation.md)).
+> **AI-generated until a human verifies.** An LLM-written entry ends with an *🤖 AI-generated* marker and leaves `**Reviewed by**:` **empty** — it is a draft. The member reads it, then writes their GitHub username on that line to certify the activity, times, and links are accurate. Before signing, self-review the draft — every task has an evidence link that resolves, every duration comes from data, every pending/blocked goal states its reason; AI may help find the gaps but must never invent evidence ([Open Research Playbook — AI Daily Self-review](https://github.com/raycg/Open-Research-Playbook/blob/main/templates/E-ai-daily-self-review-prompt.md)). The entry is committed under the AI's identity so machine drafts stay distinguishable from verified ones — this AI attribution is for the daily-log only (repo/code commits strip the LLM; the member is sole author — see [Git Commit Convention](./CLAUDE.md)). Same rule for LLM-written meeting minutes and documentation ([logistics/meeting.md](./logistics/meeting.md), [research.md](./research.md)).
 
 Example (per-task durations, a grouped long span, one collapsed bulk activity, and a calendar meeting with no minutes yet):
 
@@ -146,7 +130,7 @@ Example (per-task durations, a grouped long span, one collapsed bulk activity, a
 
 **Key Principles**:
 
-- One project = one markdown file ([implementation/user guide](./implementation-guide.md) OR [project documentation](./project-documentation.md)); one hourly task = one section header (`##`) in that file.
+- One project = one markdown file ([implementation.md](./implementation.md) OR [research.md](./research.md)); one hourly task = one section header (`##`) in that file.
 - The LTM holds the detail; the daily-log holds the summary — distil, don't transcribe.
 - Log each task right after finishing it, and set the day's short-term goal for the project you'll work on.
 

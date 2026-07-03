@@ -22,7 +22,7 @@ The primary audience is:
 
 ```shell
 SOP/
-├── README.md                  # Main SOP overview — entry point for all lab rules
+├── README.md                  # Main SOP — new-student guideline: Research Philosophy, Getting Started (first week), stage navigation, Sections 1–6
 ├── daily-log.md               # How to write daily plans and logs (format, workflow, automation)
 ├── leaving-procedure.md       # Full leaving procedure: graduation, professor change policy, handover checklists, NDA requirement
 ├── .github/
@@ -32,14 +32,16 @@ SOP/
 ├── .gitignore                 # Git ignore rules (.DS_Store, .claude/settings.local.json, graphify-out/)
 ├── .vscode/
 │   └── mcp.json                 # VS Code MCP server config (Microsoft 365 Agents Toolkit MCP)
-├── implementation-guide.md    # Guideline for writing implementation guides (covers installation, end-to-end integration, and post-installation verification for O-RAN interfaces)
-├── user-guide.md              # Guideline for writing user guides for projects
+├── implementation.md          # Guideline for a project's implementation.md (installation, end-to-end integration; ends with the O-RAN verification checks)
+├── readme-guide.md            # Guideline for a project's README.md: Prerequisites → implementation.md link → User Guide
 ├── paper-writing.md           # Steps and tips for writing and revising IEEE papers
-├── project-documentation.md   # Guidelines for project documentation (architecture, diagrams)
-├── source-code-guide.md       # Source code standards: OOP, design patterns (Adapter/Factory/Strategy), Sphinx/Doxygen, folder structure
+├── research.md                # Guideline for a project's research.md — complete research description in IEEE transactions structure, reused for paper writing
+├── simulation.md              # Guideline for a project's simulation/ folder: scenarios, immutable raw files, one-command figure regeneration
+├── oran-verification.md       # Lab-common O-RAN conformance checks (O1 / E2 / R1 + PM pipeline) required by implementation.md and the D-180 review
+├── programming.md             # Source code standards + study guide: teaches WHY each OOP principle & design pattern (Adapter/Factory/Strategy) matters with examples; Sphinx/Doxygen, folder structure, O-RAN/3GPP reference (MAIO nested ToC)
 ├── AGENTS.md                  # Tool-neutral AI-agent preference base; tool adapters (CLAUDE.md) defer to it (seeded by sync-to-all-repos.sh)
 ├── .claude/
-│   └── settings.json          # Per-repo Claude model/effort pin (settings.local.json is gitignored)
+│   └── settings.json          # Committed, shared per-project baseline from llm-prefs: bypassPermissions, standard additionalDirectories, empty attribution (settings.local.json is gitignored for per-machine overrides)
 ├── CLAUDE.md                  # This file — LLM knowledge snapshot (static)
 ├── CONTEXT.md                 # Living architecture overview: key files map, external services, git convention
 ├── MEMORY.md                  # Append-only session decisions log (one dated entry per session)
@@ -57,7 +59,8 @@ SOP/
 │   └── teep-preparation.md    # TEEP program preparation guide
 └── templates/
     ├── paper/                  # IEEE paper templates
-    └── slide/                  # Presentation slide templates
+    ├── slide/                  # Presentation slide templates
+    └── student-card.md         # Student card template: first bubble = profile + hyperlinks + deadline checklists (Getting Started, M<n>, Oral Exam, Handover); following comments = daily-log posts
 ```
 
 ---
@@ -77,6 +80,7 @@ SOP/
 | **rApp** | RAN application (O-RAN ecosystem); common project type in this lab |
 | **Main Research Repo** | Student's private GitHub repo for thesis code + docs + simulation |
 | **Sub-module Repo** | Supporting repo for auxiliary components (e.g., OAI gNB modifications) |
+| **MRR** | Minimum Reproducible Result — the experimental results in the final defense slides; the incoming student must reproduce them before handover acceptance (from the Open Research Playbook) |
 
 ---
 
@@ -130,11 +134,7 @@ Details:
 Co-authored-by: Ian Joseph Chandra <ianjoseph2204@gmail.com>
 ```
 
-**Working hour field rules** (see `daily-log.md`, Auto Daily-log, "Determine the working hour"):
-- A single push can cover work done across several days. Reconstruct the hours and activities **per day** from the LTM (`worklog`/`activity` rows after the last commit), not from the commit date.
-- One `work duration` line per day: `yyyy/mm/dd_hh:mm - hh:mm (N.Nh): <activities that day>`. Hours are that day's summed session durations; activities are distilled from that day's LTM sessions.
-- A single-day session collapses to one line: `work duration: yyyy/mm/dd_hh:mm - hh:mm`.
-- All times are 24-hour Asia/Taipei. The whole-span start is the earliest user-message timestamp after the latest commit.
+**Working hour field rules** are defined **once** in `daily-log.md` (Auto Daily-log, "Determine the working hour"): one `work duration` line per day, reconstructed from the LTM (never the commit date); a single day collapses to one line; all times 24-hour Asia/Taipei; never invent a time.
 
 Push to `origin/master` (this repo uses a single `master` branch).
 
@@ -168,6 +168,7 @@ At the end of each working session, students use **Prompt B** (defined in `daily
 
 ## Important External Links
 
+- **Open Research Playbook** (Prof. Ray): https://github.com/raycg/Open-Research-Playbook — the research lifecycle (Think / Verify / Document / Transfer) and knowledge-transfer workflow this SOP implements; reporting formats stay bullet-style (GitHub-card friendly), not the playbook's table forms
 - **BMW Lab GitHub Org**: https://github.com/orgs/bmw-ece-ntust
 - **BMW Lab YouTube Channel**: https://www.youtube.com/@ntust.bmw-lab
 - **Daily-Log Automation Repo**: [bmw-ece-ntust/progress-plan](https://github.com/bmw-ece-ntust/progress-plan) (local clone: `~/Documents/GitHub/daily-logs/`, tool at `src/dailylog/`)

@@ -46,8 +46,10 @@
    - Immediate availability for remote participants
 
 5. **Action Item Documentation**:
+   - **Begin every meeting by reviewing the pending action items** from the previous minutes; end by confirming the new ones ([Open Research Playbook — Meeting Notes](https://github.com/raycg/Open-Research-Playbook/blob/main/templates/F-meeting-notes.md))
    - **Clearly state participant names** when assigning tasks
    - Use format: "*[Name], please [specific action] by [deadline]*"
+   - Every action item is a **measurable deliverable** — an experiment log, a benchmark table, a reproduced figure, a PR, an updated doc section — never a vague activity ("study the paper", "try the code")
    - Repeat action items for clarity and transcription accuracy
    - Confirm understanding before moving to next topic
 
@@ -85,6 +87,9 @@ Desired GitHub Markdown Format:
 - *Attendees*:
 - *Topic*:
 - *Summary*:
+
+- *Pending from last meeting*:
+  - [ ] <carried-over action item — reviewed at the start of the meeting>
 
 - *Discussion Points*
   - <point-1>
@@ -155,8 +160,8 @@ MEETING TRANSCRIPTION:
 **Post-Meeting (within 24 hours):**
 
 7. **Documentation & Follow-up**:
-   - Generate meeting minutes using LLM prompting template (see [Meeting Preparation](#meeting-preparation))
-   - Update [Trello Meeting Minutes](https://trello.com/c/QdkJZ1Et) with action items
+   - Generate meeting minutes using LLM prompting template (see [Meeting Preparation](#meeting-preparation)) — the minutes stay an unreviewed draft until a human fills in `*Reviewed by*`
+   - Commit the minutes to the meeting-minutes location on GitHub and link them from your daily-log entry (see [daily-log.md](../daily-log.md))
    - Distribute meeting minutes to all participants
    - Schedule follow-up meetings if required
    - Archive recording and transcription
@@ -168,7 +173,7 @@ Sub-group discussion with Professor can be done on demand.
 
 **Requirements:**
 
-1. **Daily Progress Tracking**: Update your Trello board daily with project progress (minimum 6-month historical record required).
+1. **Daily Progress Tracking**: Post your daily-log to your [student card](../templates/student-card.md) every working day (minimum 6-month historical record required) — see [daily-log.md](../daily-log.md).
 2. **Meeting Scheduling**: Confirm weekly meeting schedule with Prof. Ray via [Google Calendar](https://calendar.google.com/calendar/u/0?cid=bW4zbGl0ZzVhdm5saWx0M3Uwb2Nrb3ZzbDRAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ) at least 24 hours in advance.
 3. **Meeting Presentation Preparation**: Prepare comprehensive thesis plan slides for discussion, including all required technical diagrams:
    

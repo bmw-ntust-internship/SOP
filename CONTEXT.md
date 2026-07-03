@@ -12,12 +12,14 @@ SOP repository for the **BMW Lab** at NTUST, supervised by Prof. Ray. Pure docum
 
 | File | Purpose |
 | --- | --- |
-| `README.md` | Main SOP — sections 1–6 define lab rules; includes "Student Progress Stages (by Year)" rubric (First-year / Second-year) |
+| `README.md` | Main SOP — the new-student guideline: Research Philosophy, Getting Started (first week), stage navigation, year rubric, Sections 1–6 |
 | `daily-log.md` | Daily tracking format + Auto Daily-Log workflow (PostgreSQL LTM + 4-file reconcile) |
-| `implementation-guide.md` | Guideline for per-component installation + end-to-end integration in one document (renamed from `integration-guide.md`) |
-| `user-guide.md` | User guide template |
-| `project-documentation.md` | Project README template (architecture, use cases, MSC, class diagrams, flowcharts) |
-| `source-code-guide.md` | Coding standards: OOP, Adapter/Abstract Factory/Strategy, Sphinx/Doxygen, folder structure |
+| `implementation.md` | Guideline for a project's `implementation.md`: per-component installation + end-to-end integration, ends with the O-RAN verification checks (renamed from `implementation-guide.md`) |
+| `readme-guide.md` | Guideline for a project's `README.md`: Prerequisites → `implementation.md` link → User Guide (renamed from `user-guide.md`) |
+| `research.md` | Guideline for a project's `research.md`: complete research description in IEEE transactions structure, reused for paper writing (renamed from `project-documentation.md`) |
+| `programming.md` | Coding standards + study guide: WHY each OOP principle & design pattern (Adapter/Abstract Factory/Strategy) matters with examples, Sphinx/Doxygen, folder structure, O-RAN/3GPP reference (renamed from `source-code-guide.md`) |
+| `simulation.md` | Guideline for a project's `simulation/` folder: scenarios, immutable raw files, dataset registry, one-command figure regeneration |
+| `oran-verification.md` | Lab-common O-RAN conformance checks (O1 / E2 / R1 + PM pipeline), required at the end of every `implementation.md` and for the D-180 review |
 | `paper-writing.md` | IEEE paper writing and revision steps |
 | `leaving-procedure.md` | Full leaving/graduation process: handover, professor change policy, NDA requirement |
 | `AGENTS.md` | Tool-neutral AI-agent preference base; CLAUDE.md (and other tool adapters) defer to it |
@@ -40,6 +42,7 @@ SOP repository for the **BMW Lab** at NTUST, supervised by Prof. Ray. Pure docum
 | `NDA/nda-template.md` | NDA signed by all departing members |
 | `templates/paper/` | IEEE paper templates (PDF) |
 | `templates/slide/` | Presentation slide templates (PDF) |
+| `templates/student-card.md` | Student card template: first bubble = profile + hyperlinks + deadline checklists; comments = daily-log posts |
 
 ## External Services
 

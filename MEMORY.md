@@ -125,3 +125,55 @@ Append-only. Do not edit past entries. Add one `## yyyy-mm-dd` block per session
 ### Patterns Established
 
 - Guideline docs read best as **How-to-write rules first, fill-in template second**, with example command outputs trimmed via `...` so the guide practises the conciseness it preaches.
+
+---
+
+## 2026-07-02 (llm-prefs alignment)
+
+### Decisions
+
+- Aligned this repo's LLM behaviour with `bmw-ece-ntust/llm-prefs` (the lab's shared preference source of truth). Per its `sync-to-all-repos.sh` contract: reset `.claude/settings.json` to the canonical baseline (bypassPermissions + standard `additionalDirectories` `~/Documents/GitHub`,`~/.claude` + `skipDangerousModePermissionPrompt` + empty attribution), dropping machine-local drift (absolute paths, stray allow rules like `git push *` / `Read(//Users/ijosh/.claude/**)` / `env`); confirmed `.gitignore` has the required ignore lines; the four memory files already exist.
+- Folded the current llm-prefs base rules missing from `AGENTS.md` into it: "allow all commands unless restricted", "no trailing summary at end of a response", and a **Working Method** section (right-size model/effort, graph-first recall, LTM, terminal logging). Kept the guard rule and made explicit that it **overrides** the base's `git push` auto-commit path.
+
+### Gotchas
+
+- `sync-to-all-repos.sh` treats `AGENTS.md`/`CONTEXT.md`/`MEMORY.md`/`TODO.md` as per-project state (seeds only if missing, never overwrites); only `.claude/settings.json` (merge) and `.gitignore` (append) are actively enforced per repo. So aligning behaviour = fix settings.json + optionally hand-merge new base rules into AGENTS.md.
+- Applied the alignment to this repo by hand rather than running `sync-to-all-repos.sh`, which would also run `install.sh` (refresh global `~/.claude`) and touch every repo under `~/Documents/GitHub`.
+
+---
+
+## 2026-07-02 (guideline taxonomy rename — sweep completion)
+
+### Decisions
+
+- **Taxonomy frozen, lowercase:** guideline files are `readme-guide.md`, `research.md`, `implementation.md`, `simulation.md`, `programming.md`, `oran-verification.md`; per-project files are lowercase `research.md` / `implementation.md` (matching README Sections 2–3). This supersedes the uppercase `RESEARCH.md` / `IMPLEMENTATION.md` wording a prior session had left in CLAUDE.md / CONTEXT.md / TODO.md / student-card.md — all reconciled to lowercase. Second rename of the same files (`integration-guide` → `implementation-guide` → `implementation.md`); no further renames without a deprecation note, since external repos link these paths absolutely.
+- `templates/student-card.md`, `simulation.md`, `oran-verification.md` added to the tree; TODO's "create simulation-guide.md" satisfied by `simulation.md`.
+- Cross-repo reference sweep done in the same wave: `llm-skill-logging` (4 files) repointed from the dead `integration-guide.md` URL to `implementation.md`; `llm-prefs` `prd-extract.py` now tries `research.md` → `RESEARCH.md` → `project-documentation.md`; `daily-log/.sop-hash` recomputed to `c622ed0eac1ccd58` (must land only when this repo's push lands, or `sop-check` fires).
+
+### Gotchas
+
+- A stale `.git/index.lock` from the terminated session blocked all index writes; removed before staging.
+- The staged index held the four renames (R) with content edits unstaged (M) — a naive `git commit` without `git add` would have committed the renames but not the rewritten content.
+- `llm-prefs` PRD docs still say uppercase `RESEARCH.md` throughout; left for the in-flight PRD session to normalize (case matters on the Linux lab boxes).
+
+---
+
+## 2026-07-03
+
+### Decisions
+
+- **README is now the students' checklist; each requirement links to the one guide that owns the "how"** (no requirement lives in two places). Relocated orphan detail into guides: Code Quality Standards → `programming.md` Section 13; Simulation Video/InfluxDB/Grafana/AIML → new `simulation.md` Section 7; Graduation Procedure (NTUST forms, renumbered 8.1–8.15) → new `leaving-procedure.md` Section 8. README Sections 2/4/6 collapsed to summary + link; README ToC's five graduation sub-entries removed.
+- **`implementation.md` reproducibility rules:** added rule 2 "Record the working directory — every `cd`" (renumbering to 5 rules) with the `# run from: <dir>` per-block comment convention, plus a top-of-guide **Project Root** note declaring the `git clone` PATH as the anchor. Modeled `# run from:` in the Installation/E2E examples. Motivation: reproductions were failing due to undocumented CWD.
+- **`programming.md` rewritten as an all-in-one study guide:** each OOP principle (Sections 2.1–2.4) and design pattern (Adapter/Factory/Strategy) now teaches *why it matters → the problem → example → in our lab*, reusing RealPython/Refactoring.Guru framing; all lab-specific reference content (O-RAN rules, 3GPP KPI table, spec conventions) preserved. ToC regenerated in Markdown All-in-One format (nested, `<!-- TOC -->` managed markers).
+- Mirrored the push guard rule into `.github/copilot-instructions.md` (defers to `AGENTS.md`).
+- **Daily-log end-time rule:** when a day's end time is not on a `worklog` row, fill it from the **latest LTM timestamp for that day** (`max(end)`, else `max(updated_at)`) instead of `??:??`. Codified in `daily-log.md` (Determining durations). Applied to this commit: 2026/07/02 had no worklog `end`, so the day's end = the activity row's `updated_at` = 14:38.
+
+### Patterns Established
+
+- **De-duplication rule for the SOP:** README states the requirement (checklist item) + links; the detailed guide is the single source of truth for the "how". When trimming README, first confirm the target guide owns the content, then relocate — never delete detail that has no other home.
+- Guideline docs teach best as *why → problem → example → in our lab*, not as bare rules; and the doc should practice its own conventions in examples (e.g. `# run from:` and `...`).
+
+### Gotchas
+
+- The 2026/07/02 restructuring (taxonomy rename, new guide files, README/leaving-procedure rework) was done in a prior session whose timestamps are not in this transcript — this transcript shows only the 14:37 request that day, so that day's clock hours are flagged for review in the commit.
+- GitHub/Markdown-All-in-One heading anchors keep consecutive hyphens for em-dashes and stripped punctuation (e.g. `## 4. Code Documentation (Sphinx / Doxygen)` → `#4-code-documentation-sphinx--doxygen`). A `\s+`→`-` slug collapses them and produces false "broken anchor" reports; use `\s`→`-` (no collapse) when verifying.

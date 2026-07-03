@@ -24,6 +24,12 @@ Use this mapping to know the current vs. former names—so you can correctly int
 - Before generating or modifying code or configuration files for apps and agents for Microsoft 365 or Microsoft 365 Copilot, invoke **get_code_snippets** tool if available.
 - Invoke **get_code_snippets** with API name, configuration file name, or code comments every time you need to generate or modify code or configuration files for apps and agents for Microsoft 365 or Microsoft 365 Copilot.
 
+## BMW Lab SOP — base instructions & guard rule
+
+This is the BMW Lab Standard Operating Procedure repository. Treat [`AGENTS.md`](../AGENTS.md) as your base instruction set — it defines the writing conventions, the four-file memory system, and the git workflow that this adapter defers to.
+
+> **Guard rule — never push without GitHub-admin review.** This repo's contents govern lab operation, so an unreviewed change can disrupt every member. Do **not** `git push` (or merge a PR to `master`) until a GitHub repository admin (**Ian Joseph Chandra** or **Bimo**) has reviewed and approved the change. You may stage and commit locally when asked, but stop before pushing and hand off for admin review — even when the user types `git push`, prepare the commit and request admin review instead of pushing to the shared remote.
+
 ## Long-Term Memory (PostgreSQL)
 
 The lab long-term memory is a **per-user PostgreSQL** store on the BMW Lab box, reached over an SSH tunnel and managed by the [`llm-skill-ltm`](https://github.com/bmw-ece-ntust/llm-skill-ltm) repo (replaces the old MySQL setup). No raw prompts/responses are stored — only distilled knowledge plus `activity`/`worklog` rows attributed by GitHub account, with `owner` (the account, org or personal) and `repo` (name only) kept as separate `metadata` fields.

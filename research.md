@@ -1,12 +1,12 @@
-<h1 align="center">Project Documentation - Guideline</h1>
+<h1 align="center">research.md — Research Documentation Guideline</h1>
 
 ---
 
 > [!WARNING]
 >
-> 1. Use this template as the `README.md` of your main research repository.
+> 1. Use this template as the `research.md` of your main research repository.
 >
-> 2. The [SOP template of project documentation](https://github.com/bmw-ece-ntust/SOP/blob/master/project-documentation.md) is regularly updated.  
+> 2. The [SOP template of research.md](https://github.com/bmw-ece-ntust/SOP/blob/master/research.md) is regularly updated.  
 > Please check it regularly.
 
 > [!CAUTION]
@@ -20,40 +20,49 @@
 ---
 
 > [!NOTE]
-> **Documentation Structure:**
->
-> - **Installation Guide**: System setup, configuration, and deployment procedures
-> - **User Guide**: Operating instructions for the deployed system
-> - **Project Documentation**: Technical architecture, use cases, MSC, flowcharts, and class diagrams with links to installation guides
+> **`research.md`** (this template) is the **complete research description** of the project: system model, architecture, use cases, MSC, flowcharts, class diagrams, parameters, and references. For the other two project documentation files (`README.md` entry point, `implementation.md` testbed setup), see the documentation map in [README Section 3](./README.md#3-documentation-requirements).
 
 ## Purpose
 
-This documentation purposes to describe the main idea of your thesis/paper writing project. Every detail of your project needs to be written in here, thus the co-authors can verify the research results through this document and repositories.
+`research.md` describes the research project **completely**, following the structure of an IEEE journal/transactions paper. Every detail a co-author needs to verify the research results — and every piece of content needed to draft the paper — must be written here, so future paper writing reuses this document and its `.bib` file directly (see [paper-writing.md](./paper-writing.md)) instead of starting from scratch.
+
+**Mapping to an IEEE transactions paper:**
+
+| research.md section | IEEE paper section |
+| --- | --- |
+| [Introduction](#introduction) — background, importance, contribution, challenges | I. Introduction (with related-work summaries) |
+| [System Model](#system-model) | III. System Model |
+| [System Architecture](#system-architecture) + [Components Explanation](#components-explanation) | IV. Proposed System |
+| [Use Case Diagram](#use-case-diagram), [MSC](#message-sequence-chart-msc), [Flowchart](#flowchart) | IV–V. Proposed method: procedures and algorithms |
+| [Class Diagram](#class-diagram) + [System Parameters](#system-parameters) | V. Implementation details, notation, and parameter tables |
+| [Experiment Scenarios and Results](#experiment-scenarios-and-results) | VI. Performance Evaluation |
+| [References](#references) | References (same `.bib` file) |
+| [Execution Status](#execution-status), [Minimum Requirements](#minimum-requirements) | *(not in the paper — reproducibility and progress tracking)* |
 
 **Documentation Hierarchy:**
 
 ```mermaid
 graph TD
-    PD[Project Documentation]
+    RD[research.md]
     
     subgraph "Component A"
-        IG-A[Installation Guide A]
+        IG-A[Implementation Guide A]
         UG-A[User Guide A]
     end
 
     subgraph "Component B"
-        IG-B[Installation Guide B]
+        IG-B[Implementation Guide B]
         UG-B[User Guide B]
     end
 
     subgraph "Component C"
-        IG-C[Installation Guide C]
+        IG-C[Implementation Guide C]
         UG-C[User Guide C]
     end
 
-    IG-A --> PD
-    IG-B --> PD
-    IG-C --> PD
+    IG-A --> RD
+    IG-B --> RD
+    IG-C --> RD
 ```
 
 ## Table of Contents
@@ -90,6 +99,7 @@ graph TD
   - [UC4: Activate Cell](#uc4-activate-cell-1)
 - [Class Diagram](#class-diagram)
   - [System Parameters](#system-parameters)
+- [Experiment Scenarios and Results](#experiment-scenarios-and-results)
 - [References](#references)
 
 ## Introduction
@@ -441,7 +451,6 @@ graph TB
 #### [User Equipment](ue-installation-link)
 
 <Add component explanation>
-| Kubernetes      | 1.18 or higher               |
 
 ## Use Case Diagram
 
@@ -940,7 +949,7 @@ Furthermore, we need to add [adapter pattern design programming](https://refacto
 > Every parameter name in this table — and anywhere it appears in documentation, diagrams, or code docstrings — **must** be hyperlinked to its authoritative specification (3GPP TS, O-RAN spec, or IEEE standard) with the exact section and page/paragraph reference.
 >
 > Use the format: `[PARAM_NAME](spec-zip-url) (TS XX.XXX §Y.Z, Table Y.Z-1, p.N)`.
-> See [source-code-guide.md §8](./source-code-guide.md#8-standards--parameter-reference-convention) for the full convention and archive URLs.
+> See [programming.md Section 12](./programming.md#12-standards-and-parameter-reference-convention) for the full convention and archive URLs.
 
 > [!NOTE]
 > **Guideline:** Define the input and output parameters used in the system, following 3GPP specifications. These parameters should be reflected in the class diagram attributes.
@@ -1086,6 +1095,25 @@ classDiagram
     EnergySavingXApp ..> TrafficStatus : analyzes
     UserEquipment ..> MeasurementReport : generates
 ```
+
+## Experiment Scenarios and Results
+
+> [!NOTE]
+> **Guideline:** List every scenario used to demonstrate the contribution — these same scenarios become the paper's Performance Evaluation section (see [paper-writing.md](./paper-writing.md), writing step 3). For each scenario define:
+>
+> 1. **Goal** — what the scenario demonstrates; must be in line with the scope of the contribution
+> 2. **Constants and variables** — the fixed parameter settings and the swept variables (reference the [System Parameters](#system-parameters) table)
+> 3. **Figure** — X axis, Y axis, and the expected result
+> 4. **Evidence** — the experiment scripts that reproduce it and the raw dataset in the [Thesis pCloud folder](http://u.pc.cd/Dbd)
+>
+> The runs, raw files, and figure regeneration for these scenarios are organized per [simulation.md](./simulation.md) — every figure must be regenerable from the stored raw files with one command.
+
+**Example:**
+
+| Scenario | Goal | Constants | Variables | Figure (X / Y) | Evidence |
+| --- | --- | --- | --- | --- | --- |
+| S1: Low-traffic cell sleep | Energy saved with zero dropped calls | 2 cells, `prbThresholdLow` = 30% | Number of UEs (1–20) | UEs / Energy saved (W) | `<scripts link>` · `<pCloud dataset link>` |
+| S2: Cell reactivation latency | Wake-up meets QoS deadline | 2 cells, sleep state | Traffic ramp rate | Ramp rate / Activation time (s) | `<scripts link>` · `<pCloud dataset link>` |
 
 ## References
 

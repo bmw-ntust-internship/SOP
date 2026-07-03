@@ -4,8 +4,16 @@ Tool-neutral preference base for any AI agent working in the BMW Lab **SOP** rep
 
 ## Behavior
 
-- Do not auto-commit. Reconcile the four project files and show the commit message for review; commit and push only when the user explicitly says so.
-- Be concise and direct.
+- Do not auto-commit. Reconcile the four project files and show the commit message for review; commit and push only when the user explicitly says so. The llm-prefs base treats `git push` as an auto-commit path, but the guard rule in Git Workflow **overrides that here** — this repo never pushes without GitHub-admin review.
+- Allow all commands in this session unless explicitly restricted.
+- Be concise and direct; no trailing summary at the end of a response — the user can read the diff.
+
+## Working Method
+
+- **Right-size the model and effort** to the repo's scope; change it only with the user's confirmation, never silently, and respect a value the user set by hand. Pinned in `.claude/settings.json`; adjust via `/adjust-model`.
+- **Graph-first recall.** Prefer the graphify knowledge graph over reading files wholesale when answering questions about the repo; build it once, then query it.
+- **Long-term memory.** Recall past decisions and sessions from the per-user PostgreSQL LTM and store durable notes there; fall back to local markdown memory when it is offline.
+- **Terminal logging.** Where command-capture is wired (`termlog`), generate reproducible installation/integration guides from the real command history.
 
 ## Writing Conventions
 
@@ -36,5 +44,5 @@ Every repo keeps four files at its root, kept in sync and reconciled when commit
 ## Daily-Log and Long-Term Memory
 
 - The daily-log format and the Auto Daily-log reconcile workflow are defined in `daily-log.md`. Entries are reconstructed per day and per project from the LTM; tag each with its `[owner/repo]`, with start and end times (overlapping ranges allowed).
-- **Human verification of LLM-written content.** Any artifact an LLM drafts — daily-log entries, meeting minutes, documentation — carries a `**Reviewed by**: <GitHub username>` line under its date/title. The agent leaves it as the placeholder; the responsible student fills in their username to certify they verified the content. An artifact still showing `<GitHub username>` is an unreviewed draft. Defined in `daily-log.md`, `logistics/meeting.md`, and `project-documentation.md`. The agent must never fill this field in on the user's behalf.
+- **Human verification of LLM-written content.** Any artifact an LLM drafts — daily-log entries, meeting minutes, documentation — carries a `**Reviewed by**: <GitHub username>` line under its date/title. The agent leaves it as the placeholder; the responsible student fills in their username to certify they verified the content. An artifact still showing `<GitHub username>` is an unreviewed draft. Defined in `daily-log.md`, `logistics/meeting.md`, and `research.md`. The agent must never fill this field in on the user's behalf.
 - The lab long-term memory is a per-user PostgreSQL store managed by `bmw-ece-ntust/llm-skill-ltm`; no raw prompts or responses are ever stored.
