@@ -177,3 +177,16 @@ Append-only. Do not edit past entries. Add one `## yyyy-mm-dd` block per session
 
 - The 2026/07/02 restructuring (taxonomy rename, new guide files, README/leaving-procedure rework) was done in a prior session whose timestamps are not in this transcript — this transcript shows only the 14:37 request that day, so that day's clock hours are flagged for review in the commit.
 - GitHub/Markdown-All-in-One heading anchors keep consecutive hyphens for em-dashes and stripped punctuation (e.g. `## 4. Code Documentation (Sphinx / Doxygen)` → `#4-code-documentation-sphinx--doxygen`). A `\s+`→`-` slug collapses them and produces false "broken anchor" reports; use `\s`→`-` (no collapse) when verifying.
+
+---
+
+## 2026-07-03 (new-student clarity pass)
+
+### Decisions
+
+- Ran a "read the SOP as a new student" review; applied the 5 self-contained fixes: (1) **Glossary — Read This First** in README (11 O-RAN/lab terms + O-RAN SC primer link) so jargon is defined before first use; (2) day-one ordering note in `daily-log.md` (write times manually until `/register-member` installs LTM/termlog); (3) placeholder convention in student-card (`<study-notes link>` instead of a broken-looking `[study notes](link)`); (4) `oran-verification.md` restructured from one numbered list into 5 `##` sections + ToC so each interface check is linkable; (5) README Section 3 footnote explaining the guideline-file naming rule and the `readme-guide.md` exception.
+- Deferred (need user data, tracked in TODO): `students.md` stub, Contacts table (names), reference project for the first-week reproduce-one-result fallback.
+
+### Patterns Established
+
+- Clarity reviews of the SOP should be run **in persona** (new student, day one) — the failures found are on-ramp issues (vocabulary before definitions, tool-dependency ordering, placeholders that look broken), not structural ones.

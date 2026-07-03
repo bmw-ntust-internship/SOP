@@ -77,6 +77,9 @@ Every time entry is a **duration** `hh:mm - hh:mm` (start *and* end), never a si
 
 ### Determining durations
 
+> [!NOTE]
+> **New members:** the LTM and terminal log are installed at Getting Started item 4 (`/register-member`). Until that is done, write your times manually from your own clock — switch to derived durations from then on.
+
 Derive both ends of every interval and task from what the lab already captures — never guess:
 
 - **Session bounds** — from the LTM `worklog` row (exact `start`/`end` per session, recall-by-repo). These bound the outer interval / grouped span.

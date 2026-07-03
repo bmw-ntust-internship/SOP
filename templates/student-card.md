@@ -46,7 +46,7 @@
 - [ ] 3 Get GitHub org + Project board access and create this card (contact the GitHub admin) (DL: yyyy/mm/dd)
 - [ ] 4 Complete lab onboarding — `/register-member`: LLM preferences, long-term memory, credentials vault (DL: yyyy/mm/dd)
 - [ ] 5 Create the main research repo from the [template](https://github.com/bmw-ece-ntust/template) under `bmw-ece-ntust`, with `README.md` / `research.md` / `implementation.md` skeletons (DL: yyyy/mm/dd)
-- [ ] 6 Study the [typical research thesis structure](https://hackmd.io/@RayCheng/rJIuoWmB8#Typical-Research-Thesis-Structure) → [study notes](link) (DL: yyyy/mm/dd)
+- [ ] 6 Study the [typical research thesis structure](https://hackmd.io/@RayCheng/rJIuoWmB8#Typical-Research-Thesis-Structure) → study notes: `<study-notes link>` (DL: yyyy/mm/dd)
 - [ ] 7 Reproduce **one** reference experimental result from the predecessor's `simulation/README.md` — the first-week goal is to understand and reproduce, not to start new research ([Open Research Playbook — Getting Started](https://github.com/raycg/Open-Research-Playbook/blob/main/docs/03-getting-started.md)) (DL: yyyy/mm/dd)
 
 ## M1: \<Milestone Name\> (DL: yyyy/mm/dd)

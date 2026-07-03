@@ -5,6 +5,8 @@
 - [ ] Fill in the Handover Candidates table in leaving-procedure.md Section 6 (actual student names and project topics; README Section 5 now only links there)
 - [ ] Add the real Recognition Form link in leaving-procedure.md item 4.0 (currently the `<form link>` placeholder)
 - [ ] Add `progress-plan` tool usage instructions to `daily-log.md §Generating the Daily-Log Entry`
+- [ ] Add a Contacts table to README Getting Started (GitHub admin = Ian/Bimo, meeting admin, infra admin — names needed)
+- [ ] Pick the lab reference project for the first-week "reproduce one result" fallback (greenfield projects have no predecessor)
 - [x] Mirror the "never push without GitHub-admin review" guard rule into `.github/copilot-instructions.md` (added a "BMW Lab SOP — base instructions & guard rule" section that defers to `AGENTS.md`)
 - [x] De-duplicate README into a students' checklist + links: moved Code Quality Standards → `programming.md` Section 13, Simulation Video/InfluxDB/Grafana/AIML → `simulation.md` Section 7, Graduation Procedure → `leaving-procedure.md` Section 8
 - [x] Add the "record the working directory / `# run from:`" rule + a top-of-guide **Project Root** note to `implementation.md` (undocumented CWD was causing failed reproductions)
