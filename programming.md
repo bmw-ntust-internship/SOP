@@ -61,12 +61,14 @@ Before writing any code, produce the following artifacts **in order** in `resear
 | --- | --- | --- |
 | 1 | **Flowchart** | Define program logic: initialization → processing → output |
 | 2 | **Class Diagram** | Define classes, attributes, methods, relationships |
-| 3 | **System Parameters Table** | Define all inputs/outputs with 3GPP/IEEE spec references |
+| 3 | **State Machine Diagram** | Define runtime states + transition triggers (app lifecycle, controlled resources) — see [research.md](./research.md#state-machine-diagram) |
+| 4 | **System Parameters Table** | Define all inputs/outputs with 3GPP/IEEE spec references |
 
 > [!CAUTION]
-> Do not start implementation until the flowchart and class diagram are reviewed
-> and approved in a weekly meeting. The diagram is a contract: once approved, the
-> code must match it, and any change to one is a change to both.
+> Do not start implementation until the flowchart, class diagram, and state
+> machine diagram are reviewed and approved in a weekly meeting. The diagram is
+> a contract: once approved, the code must match it, and any change to one is a
+> change to both.
 
 ---
 

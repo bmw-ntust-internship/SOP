@@ -12,6 +12,7 @@
   - [Table of Contents](#table-of-contents)
   - [Purpose](#purpose)
   - [Create Daily-log Card](#create-daily-log-card)
+  - [Writing Daily-plan (morning)](#writing-daily-plan-morning)
   - [Writing Daily-log](#writing-daily-log)
     - [Formatting Standards](#formatting-standards)
     - [Determining durations](#determining-durations)
@@ -37,6 +38,33 @@ This document describes how students track daily progress and ensure systematic 
 2. Create your card from the [student card template](./templates/student-card.md).
 3. **First bubble** (the card description) — the student card, kept **edited in place** as your permanent profile, plan, and checklist status. Its structure (profile, important hyperlinks, then one deadline-carrying `##` section per checklist with an [evidence link](#evidence-links) per finished item) is defined in the template itself; the Oral Exam and Handover sections reuse the [leaving-procedure.md](./leaving-procedure.md) item numbering — the SOP defines the items, the card tracks their status.
 4. **Every following comment bubble** is one daily-log post per day, in the [Formatting Standards](#formatting-standards) below.
+
+## Writing Daily-plan (morning)
+
+Start every working day by posting the day's **plan** as that day's comment bubble — **before any work** (see the caution above). The plan lists the targets to achieve as a checklist; the evening daily-log then fills this **same comment** with actual durations and evidence.
+
+```markdown
+### yyyy/mm/dd
+
+**Reviewed by**:
+
+**Short-term Goal**
+
+- [ ] <measurable deliverable>
+
+**Daily-logs**:
+
+- [ ] <target>
+- [ ] `hh:mm` : <target>
+- [ ] `hh:mm - hh:mm` : <target>
+```
+
+- **One checklist item per target; time ticks are optional at plan time.** A target with no agreed time is a plain checklist item; a target with a known **deadline** carries a single `hh:mm` tick; a target with a defined **duration** (e.g. a meeting) carries the full `hh:mm - hh:mm` range. Durations become mandatory only in the evening log.
+- **Targets are measurable deliverables** — same rule as goals in [Formatting Standards](#formatting-standards): name the observable output, never a vague activity.
+- **Seed from what already exists**: yesterday's unfinished goals (`- [ ]` with their `— pending:` / `— blocked:` reasons), yesterday's `<Upcoming targets>`, today's calendar events (as `hh:mm - hh:mm` items), and the project `TODO.md` **Now** list.
+- **No evidence links yet** — links are added in the evening when a target is achieved.
+- **The evening log updates this same comment in place** — never a second comment for the day: each achieved target becomes a duration bullet with its evidence link per [Formatting Standards](#formatting-standards); an unachieved target stays `- [ ]` with a ` — pending: <reason>` suffix and rolls into the next morning's plan.
+- Automation: the `daily-plan` skill (`/daily-plan`, from `bmw-ece-ntust/daily-log`) drafts and posts this plan after your confirmation.
 
 ## Writing Daily-log
 
@@ -190,7 +218,7 @@ Details:
 
 #### Step 2 — Post the daily-log to GitHub
 
-After Step 1, post to `progress-plan#366` from the LTM (not the commit date). For **each calendar day** the work spanned, add one `### yyyy/mm/dd` entry in the **exact structure of [Formatting Standards](#formatting-standards)**, in this order:
+After Step 1, post to `progress-plan#366` from the LTM (not the commit date). For **each calendar day** the work spanned, add one `### yyyy/mm/dd` entry in the **exact structure of [Formatting Standards](#formatting-standards)**. If the day already has a **daily-plan** comment (posted in the morning — see [Writing Daily-plan (morning)](#writing-daily-plan-morning)), **edit that comment in place** instead of adding a new one: convert each achieved target into its duration bullet with an evidence link, and keep unachieved targets `- [ ]` with a ` — pending: <reason>` suffix. The entry order:
 
 - `### yyyy/mm/dd`
 - `**Reviewed by**:` — leave **empty**; the member fills their username after checking (see the review rule above).

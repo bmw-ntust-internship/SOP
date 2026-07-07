@@ -20,7 +20,7 @@
 ---
 
 > [!NOTE]
-> **`research.md`** (this template) is the **complete research description** of the project: system model, architecture, use cases, MSC, flowcharts, class diagrams, parameters, and references. For the other two project documentation files (`README.md` entry point, `implementation.md` testbed setup), see the documentation map in [README Section 3](./README.md#3-documentation-requirements).
+> **`research.md`** (this template) is the **complete research description** of the project: system model, architecture, use cases, MSC, flowcharts, class diagrams, state machines, parameters, and references. For the other two project documentation files (`README.md` entry point, `implementation.md` testbed setup), see the documentation map in [README Section 3](./README.md#3-documentation-requirements).
 
 ## Purpose
 
@@ -34,7 +34,7 @@
 | [System Model](#system-model) | III. System Model |
 | [System Architecture](#system-architecture) + [Components Explanation](#components-explanation) | IV. Proposed System |
 | [Use Case Diagram](#use-case-diagram), [MSC](#message-sequence-chart-msc), [Flowchart](#flowchart) | IV–V. Proposed method: procedures and algorithms |
-| [Class Diagram](#class-diagram) + [System Parameters](#system-parameters) | V. Implementation details, notation, and parameter tables |
+| [Class Diagram](#class-diagram) + [State Machine Diagram](#state-machine-diagram) + [System Parameters](#system-parameters) | V. Implementation details, notation, and parameter tables |
 | [Experiment Scenarios and Results](#experiment-scenarios-and-results) | VI. Performance Evaluation |
 | [References](#references) | References (same `.bib` file) |
 | [Execution Status](#execution-status), [Minimum Requirements](#minimum-requirements) | *(not in the paper — reproducibility and progress tracking)* |
@@ -99,6 +99,7 @@ graph TD
   - [UC4: Activate Cell](#uc4-activate-cell-1)
 - [Class Diagram](#class-diagram)
   - [System Parameters](#system-parameters)
+- [State Machine Diagram](#state-machine-diagram)
 - [Experiment Scenarios and Results](#experiment-scenarios-and-results)
 - [References](#references)
 
@@ -913,7 +914,7 @@ Before jumping into programming implementation, we need to define the:
 
 We should follow the [Object-Oriented Programming (OOP)](https://realpython.com/python3-object-oriented-programming/) principles to design the software architecture.
 
-Furthermore, we need to add [adapter pattern design programming](https://refactoring.guru/design-patterns/abstract-factory), since our rApp and xApp might handles multi-vendor for the same RAN components.
+Furthermore, the class diagram must show the three required design patterns from [programming.md Section 3](./programming.md#3-design-patterns): the [Adapter pattern](https://refactoring.guru/design-patterns/adapter) (proprietary vendor parameters → 3GPP enum, since our rApp and xApp might handle multi-vendor for the same RAN components), the [Abstract Factory pattern](https://refactoring.guru/design-patterns/abstract-factory) (deployment environment / vendor selection), and the [Strategy pattern](https://refactoring.guru/design-patterns/strategy) (swappable optimization algorithm).
 
 > [!NOTE]
 > **Guideline:** Define the software architecture using [Object-Oriented Programming (OOP)](https://realpython.com/python3-object-oriented-programming/) principles. Include:
@@ -924,7 +925,7 @@ Furthermore, we need to add [adapter pattern design programming](https://refacto
 > 
 > Then, specify your parameters references in the [System Parameters](#system-parameters) table, which define where can we find the standards (3GPP/IEEE) references of your parameters.
 >
-> Furthermore, we need to add [adapter pattern design programming](https://refactoring.guru/design-patterns/abstract-factory), since our rApp and xApp might handles multi-vendor for the same RAN components.
+> Furthermore, show the three required patterns ([programming.md Section 3](./programming.md#3-design-patterns)) in the diagram: [Adapter](https://refactoring.guru/design-patterns/adapter) (multi-vendor parameter normalization), [Abstract Factory](https://refactoring.guru/design-patterns/abstract-factory) (deployment environment selection), and [Strategy](https://refactoring.guru/design-patterns/strategy) (swappable algorithm).
 >
 > **Required Content:**
 >
@@ -1094,6 +1095,46 @@ classDiagram
     EnergySavingXApp ..> KPMReport : processes
     EnergySavingXApp ..> TrafficStatus : analyzes
     UserEquipment ..> MeasurementReport : generates
+```
+
+## State Machine Diagram
+
+> [!NOTE]
+> **Guideline:** After the class diagram, define the system's state machines: the finite states each long-lived component can be in and the event, KPI condition, or command that fires each transition. The class diagram shows **static structure**; the state machine shows the **runtime behavior contract** — reviewers check that every state is reachable from the flowchart logic and that the code implements exactly these states and transitions (no hidden states, no unreachable transitions).
+>
+> **Required Content:**
+>
+> 1. **Application lifecycle states**: the rApp / xApp lifecycle under its platform manager (e.g. O-RAN WG2 rApp Manager: onboard → prime → instantiate → running)
+> 2. **Controlled-resource states**: the states of the RAN resource your decisions drive (e.g. per-cell Active / HandoverInProgress / Sleep)
+> 3. **Transition triggers**: annotate every arrow with the triggering event or KPI condition, using parameter names from the [System Parameters](#system-parameters) table
+> 4. Use Mermaid [`stateDiagram-v2`](https://mermaid.js.org/syntax/stateDiagram.html) syntax
+>
+> If a class changes its behavior depending on these states, implement it with the [State pattern](https://refactoring.guru/design-patterns/state); simple state tracking (an enum attribute) does not require the pattern.
+
+**Example — rApp / xApp lifecycle (O-RAN WG2 rApp Manager):**
+
+```mermaid
+stateDiagram-v2
+    [*] --> Onboarded : package upload (CSAR)
+    Onboarded --> Primed : prime (resources validated)
+    Primed --> Onboarded : deprime
+    Primed --> Instantiated : instantiate\nSME register + ICS/E2 subscribe
+    Instantiated --> Running : first KPM report received
+    Running --> Running : control cycle\nmonitorTrafficLoad → decision
+    Running --> Primed : undeploy\nSME deregister
+    Onboarded --> [*] : delete package
+```
+
+**Example — per-cell states (Energy Saving use case, UC1–UC4):**
+
+```mermaid
+stateDiagram-v2
+    [*] --> Active : cell discovered
+    Active --> HandoverInProgress : lowTraffic (UC2 initiateHandover)\nDRB.PrbUtilDL < prbThresholdLow
+    HandoverInProgress --> Sleep : all UEs moved\nUC3 shutdownCell
+    HandoverInProgress --> Active : handover failed / aborted
+    Sleep --> Active : neighbor overload (UC4 activateCell)\nDRB.PrbUtilDL > prbThresholdHigh
+    Sleep --> [*] : cell removed from topology
 ```
 
 ## Experiment Scenarios and Results
