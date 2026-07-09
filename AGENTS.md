@@ -4,7 +4,7 @@ Tool-neutral preference base for any AI agent working in the BMW Lab **SOP** rep
 
 ## Behavior
 
-- Do not auto-commit. Reconcile the four project files and show the commit message for review; commit and push only when the user explicitly says so. The llm-prefs base treats `git push` as an auto-commit path, but the guard rule in Git Workflow **overrides that here** — this repo never pushes without GitHub-admin review.
+- Do not auto-commit. Reconcile the four project files and show the commit message for review; commit and push only when the user explicitly says so. The llm-core base treats `git push` as an auto-commit path, but the guard rule in Git Workflow **overrides that here** — this repo never pushes without GitHub-admin review.
 - Allow all commands in this session unless explicitly restricted.
 - Be concise and direct; no trailing summary at the end of a response — the user can read the diff.
 

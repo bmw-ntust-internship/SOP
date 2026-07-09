@@ -149,7 +149,7 @@ Example (per-task durations, a grouped long span, one collapsed bulk activity, a
   - *Daily-log Skill*
     - `09:30 - 11:15` : [Fix the bullet time-range parser](https://github.com/ijosh-ch/daily-log/tree/abc1234#dailylog-md)
   - *LLM Preferences*
-    - `11:30 - 14:00` : [Propagated shared AI-agent preferences across 18 repos](https://github.com/bmw-ece-ntust/llm-prefs/tree/0c55014#propagation)
+    - `11:30 - 14:00` : [Propagated shared AI-agent preferences across 18 repos](https://github.com/bmw-ece-ntust/llm-core/tree/0c55014#propagation)
 - [Weekly BMW Lab sync](https://github.com/bmw-ece-ntust/SOP/tree/0000000#weekly-sync)
 - <Upcoming targets>
 ```
@@ -251,7 +251,7 @@ Example (full structure — Short-term Goal, hourly summaries with task sub-bull
   - `14:07 - 16:20` : [Separate owner from repo in record-session and backfill](https://github.com/bmw-ece-ntust/llm-skill-ltm/tree/a52ec61#record-session)
   - `16:20 - 18:00` : [Update the memory skill recall-by-repo](https://github.com/bmw-ece-ntust/llm-skill-ltm/tree/a52ec61#recall-by-repo)
 - `15:00 - 16:00` : [Address PR review feedback](https://github.com/ijosh-ch/some-repo/tree/abc1234#review) (parallel)
-- `16:00 - 17:00` : [Propagated shared AI-agent preferences across 18 repos](https://github.com/bmw-ece-ntust/llm-prefs/tree/0c55014#propagation)
+- `16:00 - 17:00` : [Propagated shared AI-agent preferences across 18 repos](https://github.com/bmw-ece-ntust/llm-core/tree/0c55014#propagation)
 - [Weekly BMW Lab sync](https://github.com/bmw-ece-ntust/SOP/tree/0000000#weekly-sync)
 - <Upcoming targets>
 

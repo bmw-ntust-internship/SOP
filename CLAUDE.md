@@ -41,7 +41,7 @@ SOP/
 ├── programming.md             # Source code standards + study guide: teaches WHY each OOP principle & design pattern (Adapter/Factory/Strategy) matters with examples; Sphinx/Doxygen, folder structure, O-RAN/3GPP reference (MAIO nested ToC)
 ├── AGENTS.md                  # Tool-neutral AI-agent preference base; tool adapters (CLAUDE.md) defer to it (seeded by sync-to-all-repos.sh)
 ├── .claude/
-│   └── settings.json          # Committed, shared per-project baseline from llm-prefs: bypassPermissions, standard additionalDirectories, empty attribution (settings.local.json is gitignored for per-machine overrides)
+│   └── settings.json          # Committed, shared per-project baseline from llm-core: bypassPermissions, standard additionalDirectories, empty attribution (settings.local.json is gitignored for per-machine overrides)
 ├── CLAUDE.md                  # This file — LLM knowledge snapshot (static)
 ├── CONTEXT.md                 # Living architecture overview: key files map, external services, git convention
 ├── MEMORY.md                  # Append-only session decisions log (one dated entry per session)

@@ -56,7 +56,7 @@ Append-only. Do not edit past entries. Add one `## yyyy-mm-dd` block per session
 
 - Committed the accumulated PostgreSQL-LTM migration work (docs rewrite across `daily-log.md`, `lab-automation/llm-memory.md`, `project-documentation.md`, `source-code-guide.md`, copilot-instructions, and the 4 project files) together as one daily-log push.
 - Adopted `AGENTS.md` as the tool-neutral preference base (seeded by `sync-to-all-repos.sh`); `CLAUDE.md` and other tool adapters defer to it. Added it and `.claude/settings.json` to the CLAUDE.md / CONTEXT.md file maps.
-- Push performed across all 5 dirty "llm-refs" repos in one go: SOP, llm-prefs, daily-log, progress-plan (daily-logs), llm-skill-logging.
+- Push performed across all 5 dirty "llm-refs" repos in one go: SOP, llm-core, daily-log, progress-plan (daily-logs), llm-skill-logging.
 
 ### Gotchas
 
@@ -128,12 +128,12 @@ Append-only. Do not edit past entries. Add one `## yyyy-mm-dd` block per session
 
 ---
 
-## 2026-07-02 (llm-prefs alignment)
+## 2026-07-02 (llm-core alignment)
 
 ### Decisions
 
-- Aligned this repo's LLM behaviour with `bmw-ece-ntust/llm-prefs` (the lab's shared preference source of truth). Per its `sync-to-all-repos.sh` contract: reset `.claude/settings.json` to the canonical baseline (bypassPermissions + standard `additionalDirectories` `~/Documents/GitHub`,`~/.claude` + `skipDangerousModePermissionPrompt` + empty attribution), dropping machine-local drift (absolute paths, stray allow rules like `git push *` / `Read(//Users/ijosh/.claude/**)` / `env`); confirmed `.gitignore` has the required ignore lines; the four memory files already exist.
-- Folded the current llm-prefs base rules missing from `AGENTS.md` into it: "allow all commands unless restricted", "no trailing summary at end of a response", and a **Working Method** section (right-size model/effort, graph-first recall, LTM, terminal logging). Kept the guard rule and made explicit that it **overrides** the base's `git push` auto-commit path.
+- Aligned this repo's LLM behaviour with `bmw-ece-ntust/llm-core` (the lab's shared preference source of truth). Per its `sync-to-all-repos.sh` contract: reset `.claude/settings.json` to the canonical baseline (bypassPermissions + standard `additionalDirectories` `~/Documents/GitHub`,`~/.claude` + `skipDangerousModePermissionPrompt` + empty attribution), dropping machine-local drift (absolute paths, stray allow rules like `git push *` / `Read(//Users/ijosh/.claude/**)` / `env`); confirmed `.gitignore` has the required ignore lines; the four memory files already exist.
+- Folded the current llm-core base rules missing from `AGENTS.md` into it: "allow all commands unless restricted", "no trailing summary at end of a response", and a **Working Method** section (right-size model/effort, graph-first recall, LTM, terminal logging). Kept the guard rule and made explicit that it **overrides** the base's `git push` auto-commit path.
 
 ### Gotchas
 
@@ -148,13 +148,13 @@ Append-only. Do not edit past entries. Add one `## yyyy-mm-dd` block per session
 
 - **Taxonomy frozen, lowercase:** guideline files are `readme-guide.md`, `research.md`, `implementation.md`, `simulation.md`, `programming.md`, `oran-verification.md`; per-project files are lowercase `research.md` / `implementation.md` (matching README Sections 2–3). This supersedes the uppercase `RESEARCH.md` / `IMPLEMENTATION.md` wording a prior session had left in CLAUDE.md / CONTEXT.md / TODO.md / student-card.md — all reconciled to lowercase. Second rename of the same files (`integration-guide` → `implementation-guide` → `implementation.md`); no further renames without a deprecation note, since external repos link these paths absolutely.
 - `templates/student-card.md`, `simulation.md`, `oran-verification.md` added to the tree; TODO's "create simulation-guide.md" satisfied by `simulation.md`.
-- Cross-repo reference sweep done in the same wave: `llm-skill-logging` (4 files) repointed from the dead `integration-guide.md` URL to `implementation.md`; `llm-prefs` `prd-extract.py` now tries `research.md` → `RESEARCH.md` → `project-documentation.md`; `daily-log/.sop-hash` recomputed to `c622ed0eac1ccd58` (must land only when this repo's push lands, or `sop-check` fires).
+- Cross-repo reference sweep done in the same wave: `llm-skill-logging` (4 files) repointed from the dead `integration-guide.md` URL to `implementation.md`; `llm-core` `prd-extract.py` now tries `research.md` → `RESEARCH.md` → `project-documentation.md`; `daily-log/.sop-hash` recomputed to `c622ed0eac1ccd58` (must land only when this repo's push lands, or `sop-check` fires).
 
 ### Gotchas
 
 - A stale `.git/index.lock` from the terminated session blocked all index writes; removed before staging.
 - The staged index held the four renames (R) with content edits unstaged (M) — a naive `git commit` without `git add` would have committed the renames but not the rewritten content.
-- `llm-prefs` PRD docs still say uppercase `RESEARCH.md` throughout; left for the in-flight PRD session to normalize (case matters on the Linux lab boxes).
+- `llm-core` PRD docs still say uppercase `RESEARCH.md` throughout; left for the in-flight PRD session to normalize (case matters on the Linux lab boxes).
 
 ---
 
