@@ -190,3 +190,13 @@ Append-only. Do not edit past entries. Add one `## yyyy-mm-dd` block per session
 ### Patterns Established
 
 - Clarity reviews of the SOP should be run **in persona** (new student, day one) — the failures found are on-ramp issues (vocabulary before definitions, tool-dependency ordering, placeholders that look broken), not structural ones.
+
+---
+
+### 2026/07/10 — [pending] "Add new-member registration procedure; repoint getting-started links to llm-core README"
+
+**Duration**:
+- 2026/07/09 (~0.3h): wrote `lab-automation/registration.md` (member + admin registration steps, access levels, offboarding) and linked it from `auto-lab.md` + `lab-automation/skills.md`
+- 2026/07/10_11:05 - 11:10 (0.1h): repointed all `llm-core/docs/GETTING-STARTED.md` links to the merged `llm-core` README anchors; removed section-sign symbols per writing rules
+
+**Summary**: Added the full new-member registration procedure as `lab-automation/registration.md` — the three-phase flow (member requests via `/register-member`, admin provisions Vault identity + Postgres DB + SSH, member verifies), keyed on the GitHub username as the single ID, with the offboarding reversal — and linked it from the automation overview and the skills index. Then repointed every getting-started reference to the `llm-core` README's "Getting Started" section, since `docs/GETTING-STARTED.md` was merged into that README and deleted.

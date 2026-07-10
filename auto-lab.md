@@ -3,7 +3,7 @@
 ---
 
 > [!NOTE]
-> **Who this is for.** New lab members setting up their machine and wondering what all the `llm-*` repos are. This is the essential map of the BMW Lab automation system: what runs automatically, what each repo does, and how to get wired up in one prompt. The hands-on setup walkthrough is [`llm-core/docs/GETTING-STARTED.md`](https://github.com/bmw-ece-ntust/llm-core/blob/master/docs/GETTING-STARTED.md).
+> **Who this is for.** New lab members setting up their machine and wondering what all the `llm-*` repos are. This is the essential map of the BMW Lab automation system: what runs automatically, what each repo does, and how to get wired up in one prompt. The hands-on setup walkthrough is [`llm-core` README (Getting Started)](https://github.com/bmw-ece-ntust/llm-core/blob/master/README.md#getting-started-new-members).
 
 ## 1. The Idea
 
@@ -15,7 +15,7 @@ One root repo governs LLM behaviour and imports the skills from satellite repos:
 
 | Repo | Role | What it gives you |
 | --- | --- | --- |
-| [`llm-core`](https://github.com/bmw-ece-ntust/llm-core) *(to be renamed `llm-core`)* | **Root** — LLM behaviour + skills registry | Lab preferences for Claude Code / Copilot / Codex / Cowork, the tool-neutral skill index (`skills/MANIFEST.md`), onboarding (`/register-member`), model right-sizing (`/adjust-model`), repo onboarding (`/project-init`) |
+| [`llm-core`](https://github.com/bmw-ece-ntust/llm-core) *(formerly `llm-prefs`)* | **Root** — LLM behaviour + skills registry | Lab preferences for Claude Code / Copilot / Codex / Cowork, the tool-neutral skill index (`skills/MANIFEST.md`), onboarding (`/register-member`), model right-sizing (`/adjust-model`), repo onboarding (`/project-init`) |
 | [`daily-log`](https://github.com/bmw-ece-ntust/daily-log) | Daily-log automation | `/daily-plan` (morning targets), auto commit-and-log on `git push`, `/daily-log` (evening posting to `progress-plan#366`), `/daily-log-audit` (full-history conformance repair) |
 | [`llm-skill-ltm`](https://github.com/bmw-ece-ntust/llm-skill-ltm) | Long-term memory | Per-user PostgreSQL on the lab box: automatic activity rows per repo/day, exact-time worklogs, `/memory` recall — SOP overview in [lab-automation/llm-memory.md](./lab-automation/llm-memory.md) |
 | [`llm-skill-logging`](https://github.com/bmw-ece-ntust/llm-skill-logging) | Terminal logging | `/termlog` captures every command + output; `/integration-guide` turns your real command history into an SOP-format guide |
@@ -39,7 +39,9 @@ Once registered, with **zero extra effort from you**:
 
 ## 4. Get Set Up (once, ~15 minutes + admin steps)
 
-1. **Prerequisites** — GitHub org membership, `gh auth login`, and the admin-provisioned items (Vault login, SSH to the lab box, your memory DB). Full table: [GETTING-STARTED §1](https://github.com/bmw-ece-ntust/llm-core/blob/master/docs/GETTING-STARTED.md#1-prerequisites-do-these-by-hand-once).
+Full registration procedure — member steps, admin steps, access levels, verification: [lab-automation/registration.md](./lab-automation/registration.md). In short:
+
+1. **Prerequisites** — GitHub org membership, `gh auth login`, and the admin-provisioned items (Vault login, SSH to the lab box, your memory DB). Full table: [README Getting Started, Section 1](https://github.com/bmw-ece-ntust/llm-core/blob/master/README.md#1-prerequisites-do-these-by-hand-once).
 2. **One-touch bootstrap** — `curl -fsSL https://raw.githubusercontent.com/bmw-ece-ntust/llm-core/master/setup/bootstrap.sh | bash` clones the lab repos and installs the preference into your AI tool.
 3. **Register** — open your assistant in the `llm-core` repo and run `/register-member`. It derives every per-user resource from your GitHub login, wires preferences + skills + LTM, drafts your credential-access request (`/creds-register`), and tells you exactly which admin steps are still pending.
 
@@ -61,6 +63,7 @@ Until the admin steps land, memory falls back to local markdown — you are neve
 
 ## 7. Where to Go Next
 
+- [lab-automation/registration.md](./lab-automation/registration.md) — the full new-member registration procedure (skills, Vault, LTM, termlog).
 - [lab-automation/skills.md](./lab-automation/skills.md) — every skill the lab already has, by domain.
 - [vibe-coding.md](./vibe-coding.md) — how to produce industrial-grade code with the AI.
-- [GETTING-STARTED.md](https://github.com/bmw-ece-ntust/llm-core/blob/master/docs/GETTING-STARTED.md) — the full setup walkthrough.
+- [the llm-core README](https://github.com/bmw-ece-ntust/llm-core/blob/master/README.md#getting-started-new-members) — the full setup walkthrough.

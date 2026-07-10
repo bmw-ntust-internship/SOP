@@ -5,6 +5,8 @@
 
 ## Onboarding
 
+> Full registration procedure (member + admin steps, access levels, verification): [registration.md](./registration.md).
+
 | Skill | Say / type | What it does | Lives in |
 | --- | --- | --- | --- |
 | `register-member` | `/register-member`, "set me up" | One-touch setup of the whole LLM system (preferences, skills, LTM) keyed on your GitHub username; invokes `creds-register` for your Vault identity | `llm-core` |
