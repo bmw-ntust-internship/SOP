@@ -305,12 +305,11 @@ to any external parties outside the lab without explicit authorization from thei
 > Due to company's confidential policies, the following deliverables need to be confirmed with the host company before submission. Please use email and cc your supervisor in NTUST.
 
 - [ ] Final reports:  
-  - [ ] Testimonial in [Google Docs](https://drive.google.com/drive/folders/1LUXsHmH-f80VqcJI55XWuzvm6z3VvgyA?usp=sharing)
-  - [ ] Internship report to university (upload to [pCloud](http://u.pc.cd/irg7))
-  - [ ] 5-7 minutes/team Presentation slides (upload to [pCloud](http://u.pc.cd/ArB)), contents:
+  - [ ] Testimonial in [Google Docs](https://docs.google.com/document/d/1x5miiWiwCyZk5kLQjR5RS8wYaWPcsvyexSQt6ughC2k/edit?usp=sharing)
+  - [ ] 5-7 minutes/team Presentation slides (upload to [pCloud](https://u.pcloud.link/publink/show?code=kZYznr5ZB3Pl4bi8uYXhl9rylOXbYBUd8yVk#/filemanager?folder=32500291475)), contents:
     1. A brief summary of your activities in the company.
     2. High-level concept (use case) that you're working on in the company.
-- [ ] Promotional & Testimonial [Final Videos](https://u.pcloud.link/publink/show?code=kZcjSh5ZycYwg6EvFOh21AV5jdbJNRMAX097) (2-3 minutes/person)
+- [ ] Promotional & Testimonial [Final Videos](https://u.pcloud.link/publink/show?code=kZYznr5ZB3Pl4bi8uYXhl9rylOXbYBUd8yVk#/filemanager?folder=32500305486) (2-3 minutes/person)
 
 
 > [!NOTE]
