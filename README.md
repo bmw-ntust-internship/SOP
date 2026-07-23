@@ -284,20 +284,20 @@ to any external parties outside the lab without explicit authorization from thei
 **For Research Lab Internships:**
 - [ ] Final report:
   - [ ] Project report in [IEEE-formatted](https://www.overleaf.com/latex/templates/ieee-conference-template/grfzhhncsfqn) ([Lab template](https://www.overleaf.com/read/zmrnyqzkkycw))
-  - [ ] Testimonial in [Google Docs](https://docs.google.com/document/d/1TJ_ZH05s5CgREhXkVdLC0e45Pccle2hzcsBdOBCwlYY/edit?usp=sharing).
-  - [ ] 1st part (Summary of your activities in the lab). Example: [Summary Example](https://docs.google.com/document/d/16GuLmcEzUzki9X0ce-6XZCX_epobgCf0idP4Fh6pkHg/edit?tab=t.0#bookmark=kix.dr86e5hxwvi1)
-  - [ ] 2nd part (Testimonial report, more general experience sharing, what you learned, etc.). Example: [Testimonial Report](https://docs.google.com/document/d/16GuLmcEzUzki9X0ce-6XZCX_epobgCf0idP4Fh6pkHg/edit?tab=t.0#bookmark=id.g9fkdm1q2see)
+  - [ ] Testimonial in [Google Docs](https://docs.google.com/document/d/1x5miiWiwCyZk5kLQjR5RS8wYaWPcsvyexSQt6ughC2k/edit?usp=sharing).
+  - [ ] 1st part (Summary of your activities in the lab). Example: [Summary Example](https://docs.google.com/document/d/1TJ_ZH05s5CgREhXkVdLC0e45Pccle2hzcsBdOBCwlYY/edit?tab=t.0)
+  - [ ] 2nd part (Testimonial report, more general experience sharing, what you learned, etc.). Example: [Testimonial Report](https://docs.google.com/document/d/1TJ_ZH05s5CgREhXkVdLC0e45Pccle2hzcsBdOBCwlYY/edit?tab=t.0#bookmark=id.5x0zj02s1v7c)
   - [ ] Copy the bookmark link to your section and paste it in the corresponding section in the Google Form.
 - [ ] Fill Google Form:
     - [ ] [TEEP Summary](https://docs.google.com/forms/d/e/1FAIpQLSdWLiwlq39icJ-ulSeVIIHkzcu01MwK-xSO_9tMzItofZt0hQ/viewform)
     - [ ] [Mentor Assessment](https://docs.google.com/forms/d/e/1FAIpQLSeJ5ZNKkrz27HFsO2ZFiU-mB2DwD8yFyf45zqdxJqjnnyWVLA/viewform)
-- [ ] 5-7 minutes/team Presentation slides (upload to [pCloud](http://u.pc.cd/ArB)), contents:
+- [ ] 5-7 minutes/team Presentation slides (upload to [pCloud](https://u.pcloud.link/publink/show?code=kZYznr5ZB3Pl4bi8uYXhl9rylOXbYBUd8yVk#/filemanager?folder=32500291475)), contents:
       1. Use case, system architectures, scenarios (MSC).
       2. I/Os of the system (can be a table of parameters).
       3. Results & analysis
-- [ ] [Final Videos](https://u.pcloud.link/publink/show?code=kZcjSh5ZycYwg6EvFOh21AV5jdbJNRMAX097):
-  - [ ] [Project demo](https://u.pcloud.link/publink/show?code=kZcjSh5ZycYwg6EvFOh21AV5jdbJNRMAX097#/filemanager?folder=26329180467) video in English (~5 minutes/person).
-  - [ ] Promotional & [Testimonial video](https://u.pcloud.link/publink/show?code=kZcjSh5ZycYwg6EvFOh21AV5jdbJNRMAX097#/filemanager?folder=26329102696) (2-3 minutes/person)
+- [ ] [Final Videos](https://u.pcloud.link/publink/show?code=kZYznr5ZB3Pl4bi8uYXhl9rylOXbYBUd8yVk#/filemanager?folder=32390522230):
+  - [ ] [Project demo](https://u.pcloud.link/publink/show?code=kZYznr5ZB3Pl4bi8uYXhl9rylOXbYBUd8yVk#/filemanager?folder=32500304443) video in English (~5 minutes/person).
+  - [ ] Promotional & [Testimonial video](https://u.pcloud.link/publink/show?code=kZYznr5ZB3Pl4bi8uYXhl9rylOXbYBUd8yVk#/filemanager?folder=32500305486) (2-3 minutes/person)
   - [ ] Project Demo video (+ subtitle in English using .srt)
 
 **For Industrial Internships:**
