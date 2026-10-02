@@ -57,7 +57,7 @@ This document establishes the operational standards for interns participating in
 1. **Duration**: `2-3 months` (negotiable based on performance).
 2. **Weekly Reports**:  
    - Submit updates every **Friday by 15:00 (Taiwan Time)**.
-   - Report via both **LINE group** and **Trello board**.
+   - Report via both **LINE group** and **[GitHub board](https://github.com/orgs/bmw-ntust-internship/projects/4/views/1)**.
    - Minimum reporting duration: **12 weeks**.
 3. **Objectives**:
    1. **Background Knowledge Report**:
@@ -83,7 +83,7 @@ This document establishes the operational standards for interns participating in
    - Monday to Friday, **09:00–17:00 (Taiwan Time)**.
 3. **Daily Logs**:
 
-   - Must be recorded on the **GitHub repository** and **Trello board**.
+   - Must be recorded on the **GitHub repository** and **[GitHub board](https://github.com/orgs/bmw-ntust-internship/projects/4/views/1)**.
 4. **Weekly Reports**:
 
    - Submit every **Friday by 15:00 (Taiwan Time)** via LINE group.
@@ -185,10 +185,10 @@ This document establishes the operational standards for interns participating in
 ### 3.3 Weekly Reporting
 
 > [!TIP]
-> When posting your weekly report, always include direct links to the relevant Trello card or GitHub repository for easy reference by mentors.
+> When posting your weekly report, always include direct links to the relevant GitHub board card or GitHub repository for easy reference by mentors.
 
 - Interns must summarize weekly progress by:
-  - Updating Trello (activity and status log).
+  - Updating your card on the [GitHub board](https://github.com/orgs/bmw-ntust-internship/projects/4/views/1) (activity and status log).
   - **Reviewing the Final Handover Checklist to ensure continuous progress on end-of-internship deliverables.**
   - Posting a weekly report in the designated LINE group **every Friday by 15:00 (Taiwan Time)** in the following format:
 
@@ -208,12 +208,12 @@ Final Handover Progress: (e.g., Drafted intro for IEEE report, recorded 1 min of
 ### 4.1 Channels of Communication
 
 > [!TIP]
-> Always check the messages in the LINE group and Trello board for the latest updates and important announcements.
+> Always check the messages in the LINE group and [GitHub board](https://github.com/orgs/bmw-ntust-internship/projects/4/views/1) for the latest updates and important announcements.
 
 ## Tools & Communication Guidelines
 
 1. **GitHub** – Used for hosting source code, documentation, milestones, and daily logs.  
-2. **Trello** – Serves as the internship dashboard for milestone tracking and automated daily log updates (via GitHub integration/scripting).  
+2. **[GitHub board](https://github.com/orgs/bmw-ntust-internship/projects/4/views/1)** – Serves as the internship dashboard for milestone tracking and daily log updates. Create your card from the **Template** section and place it under **Industrial** or **Laboratory**.  
 3. **LINE Group**:  
    - **Main Lab Group** – For thesis-related and academic research discussions.  
    - **Company Group** – For industrial project collaboration and updates.
@@ -272,9 +272,9 @@ to any external parties outside the lab without explicit authorization from thei
   - [ ] Source code + documentation (You may use [Doxygen](https://doxygen.nl/#google_vignette) or [Sphinx](https://www.sphinx-doc.org/en/master/))
   - [ ] Installation/user guides (Example: [NVIDIA CUDA installation guide](https://docs.nvidia.com/cuda/cuda-installation-guide-linux/))
   - [ ] System Architecture diagram, MSC + call flow, Flowchart, etc.
-- [ ] Trello card/GitHub with all checklists:
-  - Daily logs (Use Daffa's GitHub/Trello sync project):
-    - [ ] Trello comments
+- [ ] GitHub board card/GitHub with all checklists:
+  - Daily logs:
+    - [ ] GitHub board card updates
     - [ ] GitHub in ./daily-log.md on your branch
 
 #### 6.1.2 Final Handover Checklist
